@@ -7,6 +7,9 @@ import managers.Invoker;
 
 import java.util.ArrayList;
 
+/**
+ * ClearCommand class to clear collection
+ */
 public class ClearCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
 
@@ -15,6 +18,12 @@ public class ClearCommand extends AbstractCommand {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Function clears collection
+     *
+     * @param args nothing in line with command
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {

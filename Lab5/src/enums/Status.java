@@ -1,5 +1,8 @@
 package enums;
 
+/**
+ * Enum Status class
+ */
 public enum Status {
     FIRED,
     HIRED,

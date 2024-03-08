@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-//Класс для работы с коллекцией
+/**
+ * Class for working with a collection
+ */
 public class CollectionManager {
     private static int id;
     private final LocalDateTime creationDate;
@@ -18,31 +20,62 @@ public class CollectionManager {
         this.creationDate = creationDate;
     }
 
+    /**
+     * Function to add an element to a collection
+     *
+     * @param element element of Worker class
+     */
     public void add(Worker element) {
         workerCollection.add(element);
         id += 1;
     }
 
+    /**
+     * Function returns id of element of a collection
+     *
+     * @return id element
+     */
     public int setId() {
         return id;
     }
 
+    /**
+     * Function sorts the collection in natural order
+     */
     public void sort() {
         Collections.sort(workerCollection);
     }
 
+    /**
+     * Function deletes an element to a collection by element
+     *
+     * @param element element of Worker class
+     */
     public void delete(Worker element) {
         workerCollection.remove(element);
     }
 
-    public void delete(int elId) {
-        workerCollection.remove(elId);
+    /**
+     * Function deletes an element to a collection by id of the element
+     *
+     * @param elementId id of element of Worker class
+     */
+    public void delete(int elementId) {
+        workerCollection.remove(elementId);
     }
 
+    /**
+     * Function clears the collection
+     */
     public void clear() {
         workerCollection.clear();
     }
 
+    /**
+     * Function set an new element to a collection by id of the element
+     *
+     * @param id,worker id of element and element of Worker class
+     */
     public void update(int id, Worker worker) {
         workerCollection.set(id, worker);
     }

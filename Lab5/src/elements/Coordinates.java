@@ -2,6 +2,9 @@ package elements;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Coordinates class to creates objects of this class
+ */
 public class Coordinates {
     @JsonProperty("x")
     private Float x; //Значение поля должно быть больше -255, Поле не может быть null
@@ -16,10 +19,20 @@ public class Coordinates {
         this.y = y;
     }
 
+    /**
+     * Function sets 'x' coordinate
+     *
+     * @param x value
+     */
     public void setX(Float x) {
         this.x = x;
     }
 
+    /**
+     * Function sets 'y' coordinate
+     *
+     * @param y value
+     */
     public void setY(Integer y) {
         this.y = y;
     }

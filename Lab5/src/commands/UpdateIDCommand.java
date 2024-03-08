@@ -5,7 +5,9 @@ import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionElementsReader;
 import managers.CollectionManager;
 import managers.Invoker;
-
+/**
+ * Class of UpdateId command. Update element by id
+ */
 public class UpdateIDCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
 
@@ -14,6 +16,12 @@ public class UpdateIDCommand extends AbstractCommand {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Function updates element by id
+     *
+     * @param args collection element id
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {

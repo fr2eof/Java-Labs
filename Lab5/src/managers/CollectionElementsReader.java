@@ -10,9 +10,17 @@ import enums.Status;
 
 import java.util.Scanner;
 
+/**
+ * CollectionElementsReader class to read and set to validating fields of elements
+ */
 public class CollectionElementsReader {
     static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Reads worker name until it passes the test
+     *
+     * @return The name of the worker
+     */
     public static String readWorkerName() {
         String line;
         do {
@@ -23,6 +31,11 @@ public class CollectionElementsReader {
         return line;
     }
 
+    /**
+     * Reads worker coordinates until it passes the test
+     *
+     * @return The coordinates of the worker
+     */
     public static Coordinates readWorkerCoordinates() {
         String line;
         do {
@@ -36,6 +49,11 @@ public class CollectionElementsReader {
         return new Coordinates(x, y);
     }
 
+    /**
+     * Reads worker salary until it passes the test
+     *
+     * @return The salary of the worker
+     */
     public static Integer readWorkerSalary() {
         String line;
         do {
@@ -46,6 +64,11 @@ public class CollectionElementsReader {
         return Integer.parseInt(line);
     }
 
+    /**
+     * Reads worker position until it passes the test
+     *
+     * @return The position of the worker
+     */
     public static Position readWorkerPosition() {
         String line;
         do {
@@ -56,6 +79,11 @@ public class CollectionElementsReader {
         return Position.valueOf(line);
     }
 
+    /**
+     * Reads worker status until it passes the test
+     *
+     * @return The name of the status
+     */
     public static Status readWorkerStatus() {
         String line;
         do {
@@ -66,6 +94,11 @@ public class CollectionElementsReader {
         return Status.valueOf(line);
     }
 
+    /**
+     * Reads person fields until they pass the test
+     *
+     * @return The new object of Person class
+     */
     public static Person readPerson() {
         Invoker.printLn("Enter object person: ");
         String line;
@@ -77,7 +110,7 @@ public class CollectionElementsReader {
             Invoker.print("Enter person passportID(String): ");
             line = scanner.nextLine();
         }
-        while (Validator.validatePersonID(line));
+        while (Validator.validatePersonPassportID(line));
         passportID = line;
 
         do {
@@ -98,6 +131,11 @@ public class CollectionElementsReader {
         return new Person(passportID, eyeColor, hairColor, location);
     }
 
+    /**
+     * Reads location fields until they pass the test
+     *
+     * @return The new object of Location class
+     */
     public static Location readLocation() {
         Invoker.printLn("Enter person location: ");
         String line;

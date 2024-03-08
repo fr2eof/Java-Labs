@@ -11,6 +11,9 @@ import enums.HColor;
 
 import java.io.IOException;
 
+/**
+ * ProductDeserializer class to map fields from Json to object fields
+ */
 public class ProductDeserializer extends StdDeserializer<Worker> {
 
     public ProductDeserializer() {
@@ -21,9 +24,16 @@ public class ProductDeserializer extends StdDeserializer<Worker> {
         super(vc);
     }
 
+    /**
+     * Sets the right data to the right fields with the right types
+     *
+     * @param jp,ctxt JsonParser , DeserializationContext
+     * @return The object of Worker class.
+     * @throws IOException if fields in file is not correct
+     */
     @Override
     public Worker deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
+            throws IOException {
 
         JsonNode productNode = jp.getCodec().readTree(jp);
         Worker product = new Worker();

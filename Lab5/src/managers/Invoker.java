@@ -4,6 +4,9 @@ import commands.ICommand;
 
 import java.util.*;
 
+/**
+ * Invoker class responsible for incoming and outgoing data
+ */
 public class Invoker {
 
     private final Map<String, ICommand> commands;
@@ -12,11 +15,16 @@ public class Invoker {
         this.commands = commands;
     }
 
-    // Парсит команду с аргументами и делегирует выполнение классу Command
+    /**
+     * Parses a string, splitting it into a command and its arguments
+     *
+     * @param line Entered string
+     * @return boolean success value
+     */
     public boolean executeCommand(String line) {
         String[] parsedLine = line.split(" ");
         String[] args = Arrays.copyOfRange(parsedLine, 1, parsedLine.length);
-        // проверка существования такой команды
+        // checking the existence of such a command
         if (!commands.containsKey(parsedLine[0]))
             return false;
 

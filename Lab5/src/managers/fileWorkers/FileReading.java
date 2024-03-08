@@ -12,7 +12,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * FileWriting class to get collection from file
+ */
 public class FileReading {
+    /**
+     * Function reads collection from file
+     *
+     * @param filePath file path
+     * @throws IOException can not read the file
+     */
     public static List<Worker> fileReading(String filePath) throws IOException {
         File file = new File(filePath);
         FileInputStream fis = new FileInputStream(file);

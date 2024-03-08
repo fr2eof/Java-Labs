@@ -8,17 +8,32 @@ import enums.Status;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Validator class to check field format
+ */
 public class Validator {
     static Set<String> personIDSet = new HashSet<>();
 
-    public static boolean validateWorkerName(String str) {
-        if (str != null && str.matches("^[a-zA-Z0-9_]+$")) {
+    /**
+     * Check format worker name
+     *
+     * @param name worker name
+     * @return boolean check value
+     */
+    public static boolean validateWorkerName(String name) {
+        if (name != null && name.matches("^[a-zA-Z0-9_]+$")) {
             return true;
         }
         Invoker.printError("Name does not match format");
         return false;
     }
 
+    /**
+     * Check format worker coordinates
+     *
+     * @param coords worker coordinates
+     * @return boolean check value
+     */
     public static boolean validateWorkerCoordinates(String coords) {
         if (coords.matches("^[+-]?[0-9]+.[0-9]+ [+-]?[0-9]+$")) {
             String[] parsed = coords.split(" ");
@@ -35,6 +50,12 @@ public class Validator {
         return false;
     }
 
+    /**
+     * Check format worker salary
+     *
+     * @param line worker salary
+     * @return boolean check value
+     */
     public static boolean validateWorkerSalary(String line) {
         try {
             Integer salary = Integer.parseInt(line);
@@ -45,6 +66,12 @@ public class Validator {
         }
     }
 
+    /**
+     * Check format worker position
+     *
+     * @param line worker position
+     * @return boolean check value
+     */
     public static boolean validateWorkerPosition(String line) {
         try {
             Position position = Position.valueOf(line);
@@ -55,6 +82,12 @@ public class Validator {
         }
     }
 
+    /**
+     * Check format worker status
+     *
+     * @param line worker status
+     * @return boolean check value
+     */
     public static boolean validateWorkerStatus(String line) {
         try {
             Status status = Status.valueOf(line);
@@ -65,18 +98,30 @@ public class Validator {
         }
     }
 
-    public static boolean validatePersonID(String line) {
+    /**
+     * Check format person passportId
+     *
+     * @param line person passportId
+     * @return boolean check value
+     */
+    public static boolean validatePersonPassportID(String line) {
         if ((4 < line.length()) && (line.length() < 33)) {
             if (personIDSet.contains(line)) {
-                Invoker.printError("PersonID must be unique");
+                Invoker.printError("Person passportID must be unique");
                 return false;
             }
             return true;
         }
-        Invoker.printError("PersonID does not match format");
+        Invoker.printError("Person passportIDID does not match format");
         return false;
     }
 
+    /**
+     * Check format person eyeColor
+     *
+     * @param line person eyeColor
+     * @return boolean check value
+     */
     public static boolean validatePersonEyeColor(String line) {
         try {
             EColor eyeColor = EColor.valueOf(line);
@@ -87,6 +132,12 @@ public class Validator {
         }
     }
 
+    /**
+     * Check format person hairColor
+     *
+     * @param line person HairColor
+     * @return boolean check value
+     */
     public static boolean validatePersonHairColor(String line) {
         try {
             HColor hairColor = HColor.valueOf(line);
@@ -97,6 +148,12 @@ public class Validator {
         }
     }
 
+    /**
+     * Check format location x
+     *
+     * @param line location x
+     * @return boolean check value
+     */
     public static boolean validateLocationX(String line) {
         try {
             Long x = Long.parseLong(line);
@@ -107,6 +164,12 @@ public class Validator {
         }
     }
 
+    /**
+     * Check format location y
+     *
+     * @param line location y
+     * @return boolean check value
+     */
     public static boolean validateLocationY(String line) {
         try {
             Long y = Long.parseLong(line);
@@ -117,6 +180,12 @@ public class Validator {
         }
     }
 
+    /**
+     * Check format location name
+     *
+     * @param line location name
+     * @return boolean check value
+     */
     public static boolean validateLocationName(String line) {
         if (line != null) {
             return true;

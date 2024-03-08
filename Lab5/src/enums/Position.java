@@ -1,5 +1,8 @@
 package enums;
 
+/**
+ * Enum Position class
+ */
 public enum Position {
     MANAGER,
     HEAD_OF_DEPARTMENT,

@@ -4,7 +4,9 @@ import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
 import managers.Invoker;
 
-
+/**
+ * SortCommand class to sort the collection in natural order
+ */
 public class SortCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
 
@@ -13,6 +15,12 @@ public class SortCommand extends AbstractCommand {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Function sorts the collection in natural order
+     *
+     * @param args nothing in line with command
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {

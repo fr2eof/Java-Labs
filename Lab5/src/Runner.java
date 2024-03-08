@@ -3,18 +3,33 @@ import elements.Worker;
 import managers.CollectionManager;
 import managers.Invoker;
 import managers.fileWorkers.FileReading;
+import managers.fileWorkers.FileWriting;
 
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Runner class starts interactive mode
+ */
 public class Runner {
     private CollectionManager collectionManager;
+    public static String path = System.getenv("COLLECTION_FILE_PATH");
 
-    public Runner() {}
 
+    public Runner() {
+    }
 
-    // Map where instances of the Command class are stored for each command
+    /**
+     * Function populates Command objects into the collection
+     *
+     * @return map filled every accessible command
+     */
     private Map<String, ICommand> fillCommandMap() {
         Map<String, ICommand> cmdMap = new HashMap<>();
         ICommand addCommand = new AddCommand(this.collectionManager);
@@ -25,10 +40,10 @@ public class Runner {
         ICommand helpCommand = new HelpCommand();
         ICommand infoCommand = new InfoCommand(this.collectionManager);
         ICommand minByldCommand = new MinByIdCommand(this.collectionManager);
-        ICommand printAscending = new PrintAscending(this.collectionManager);
+        ICommand printAscending = new PrintAscendingCommand(this.collectionManager);
         ICommand removeAnyBySalary = new RemoveAnyBySalaryCommand(this.collectionManager);
-        ICommand removeByld = new RemoveById(this.collectionManager);
-        ICommand removeFirst = new RemoveFirst(this.collectionManager);
+        ICommand removeByld = new RemoveByIdCommand(this.collectionManager);
+        ICommand removeFirst = new RemoveFirstCommand(this.collectionManager);
         ICommand saveCommand = new SaveCommand(this.collectionManager);
         ICommand showCommand = new ShowCommand(this.collectionManager);
         ICommand sortCommand = new SortCommand(this.collectionManager);
@@ -52,6 +67,9 @@ public class Runner {
         return cmdMap;
     }
 
+    /**
+     * Function supports interactive mode until exit command
+     */
     void runCommands() {
         Scanner scanner = new Scanner(System.in);
         Invoker invoker = new Invoker(fillCommandMap());
@@ -64,6 +82,9 @@ public class Runner {
         } while (!line.equals("exit"));
     }
 
+    /**
+     * Function organizes loading from file
+     */
     public void loadFromFile(String fileName) {
         List<Worker> workerCollection = new ArrayList<>();
         try (Reader reader = new BufferedReader(new FileReader(fileName));) {
@@ -77,9 +98,11 @@ public class Runner {
         this.collectionManager = new CollectionManager(workerCollection1, LocalDateTime.now());
     }
 
-
+    /**
+     * Function does everything necessary before starting the system, and starts it
+     */
     public void run() {
-        String path = System.getenv("PATH");
+        FileWriting.setFilePath(path);
         loadFromFile(path);
         Invoker.printLn("Welcome to the club, Buddy! Use 'help' to see a list of available commands ");
         runCommands();

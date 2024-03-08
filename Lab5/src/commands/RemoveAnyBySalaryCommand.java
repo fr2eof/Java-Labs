@@ -7,7 +7,9 @@ import managers.Invoker;
 
 import java.util.ArrayList;
 
-
+/**
+ * RemoveAnyBySalaryCommand class to remove one element from the collection whose salary field value is equivalent to the given one
+ */
 public class RemoveAnyBySalaryCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
 
@@ -16,6 +18,12 @@ public class RemoveAnyBySalaryCommand extends AbstractCommand {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Function removes any element from collection with salary equals value
+     *
+     * @param args value of salary
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {

@@ -4,14 +4,23 @@ import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
 import managers.Invoker;
 
-public class RemoveById extends AbstractCommand {
+/**
+ * RemoveByIdCommand class to remove an element from the collection by its id
+ */
+public class RemoveByIdCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
 
-    public RemoveById(CollectionManager collectionManager) {
+    public RemoveByIdCommand(CollectionManager collectionManager) {
         super("remove_by_id", "remove an element from the collection by its id", collectionManager);
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Function removes element from collection by id
+     *
+     * @param args collection element id
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {

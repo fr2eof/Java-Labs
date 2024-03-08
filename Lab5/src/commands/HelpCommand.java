@@ -3,11 +3,20 @@ package commands;
 import exceptions.WrongAmountOfArgumentsException;
 import managers.Invoker;
 
+/**
+ * HelpCommand class to display help on available commands
+ */
 public class HelpCommand extends AbstractCommand {
     public HelpCommand() {
         super("help", "display help on available commands");
     }
 
+    /**
+     * Function shows commands , that you can use
+     *
+     * @param args nothing in line with command
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {

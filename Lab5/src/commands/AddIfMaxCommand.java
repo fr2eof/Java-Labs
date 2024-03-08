@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * AddIfMaxCommand class to add a new element to the collection if its value is greater than the value of the largest element of this collection
+ */
 public class AddIfMaxCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
 
@@ -17,6 +20,12 @@ public class AddIfMaxCommand extends AbstractCommand {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Function add element to collection if it is max
+     *
+     * @param args nothing in line with command
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {

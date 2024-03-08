@@ -2,6 +2,9 @@ package elements;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Location class to creates objects of this class
+ */
 public class Location {
     @JsonProperty("locX")
     private Long x; //Поле не может быть null
@@ -19,14 +22,29 @@ public class Location {
         this.name = name;
     }
 
+    /**
+     * Function sets location 'x' coordinate
+     *
+     * @param x value
+     */
     public void setLocX(Long x) {
         this.x = x;
     }
 
+    /**
+     * Function sets location 'y' coordinate
+     *
+     * @param y value
+     */
     public void setLocY(Long y) {
         this.y = y;
     }
 
+    /**
+     * Function sets location name
+     *
+     * @param name value
+     */
     public void setLocName(String name) {
         this.name = name;
     }

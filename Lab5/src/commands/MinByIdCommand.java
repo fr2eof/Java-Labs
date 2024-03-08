@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * MaxByIdCommand class to display any object from the collection whose id field value is minimal
+ */
 public class MinByIdCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
 
@@ -17,6 +20,12 @@ public class MinByIdCommand extends AbstractCommand {
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Function shows any element with minimal field of collection
+     *
+     * @param args nothing in line with command
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {

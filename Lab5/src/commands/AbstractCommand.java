@@ -4,6 +4,9 @@ import managers.CollectionManager;
 
 import java.time.LocalDateTime;
 
+/**
+ * Abstract command class
+ */
 public abstract class AbstractCommand implements ICommand {
 
     private final String name;
@@ -77,5 +80,10 @@ public abstract class AbstractCommand implements ICommand {
         return name.equals(other.name) && description.equals(other.description);
     }
 
+    /**
+     * The execution method
+     *
+     * @param args command arguments
+     */
     public abstract boolean execute(String[] args);
 }

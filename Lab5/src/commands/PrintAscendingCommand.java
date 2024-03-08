@@ -9,14 +9,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PrintAscending extends AbstractCommand {
+/**
+ * PrintAscendingCommand class to print the collection elements in ascending order
+ */
+public class PrintAscendingCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
 
-    public PrintAscending(CollectionManager collectionManager) {
+    public PrintAscendingCommand(CollectionManager collectionManager) {
         super("print_ascending", "print the collection elements in ascending order", collectionManager);
         this.collectionManager = collectionManager;
     }
 
+    /**
+     * Function shows elements of collection in ascending order
+     *
+     * @param args nothing in line with command
+     * @return boolean execution success value
+     */
     @Override
     public boolean execute(String[] args) {
         try {
