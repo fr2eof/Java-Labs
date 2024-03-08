@@ -12,7 +12,7 @@ public class HelpCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 0) throw new WrongAmountOfArgumentsException();
-            Invoker.printError("• help : display help on available commands\n" +
+            Invoker.printLn("• help : display help on available commands\n" +
                     "• info : Print information about the collection (type, initialization date, number of elements, etc.) to standard output.\n" +
                     "• show : Print all collection elements in string representation to standard output\n" +
                     "• add {element} : add a new element to the collection\n" +
