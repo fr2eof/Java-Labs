@@ -1,4 +1,3 @@
-interface Describe {
-     default String describe(){
-        return "использует что-то";}
+public interface Describe {
+    String describe();
 }
