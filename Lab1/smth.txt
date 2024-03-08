@@ -1,0 +1,14 @@
+.переносим через git/cmd scp -P 2222 s412952@se.ifmo.ru:(путь)(~)
+javac (-d direction) Main.java
+java -classpath direction Main
+jar cfe Project.jar Main Main.class
+java -jar Project.jar
+javac -cp Pokemon.jar
+
+
+javac -d . -sourcepath src -cp src/Pokemon.jar src/*.java
+echo 'Main-Class: Main 
+Class-Path: Pokemon.jar
+' > Manifest.txt
+jar cvfm My.jar Manifest.txt .
+java -jar My.jar
