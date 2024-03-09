@@ -63,6 +63,13 @@ public class Person {
         this.location = location;
     }
 
+    public String toJson() {
+        return "\n    {\"passportID\":" + this.passportID + "," +
+                "\n   \"eyeColor\":\"" + this.eyeColor + "\"," +
+                "\n   \"hairColor\":\"" + this.hairColor + "\"," +
+                "\n   \"location\":" + this.location.toJson() + "}";
+    }
+
     @Override
     public String toString() {
         return "{\"passportID\":" + this.passportID + "," +

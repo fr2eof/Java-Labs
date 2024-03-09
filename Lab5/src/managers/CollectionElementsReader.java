@@ -27,7 +27,7 @@ public class CollectionElementsReader {
             Invoker.print("Enter object name(String): ");
             line = scanner.nextLine();
         }
-        while (Validator.validateWorkerName(line));
+        while (!Validator.validateWorkerName(line));
         return line;
     }
 
@@ -42,7 +42,7 @@ public class CollectionElementsReader {
             Invoker.print("Enter object coordinates(x(Float) y(Integer)): ");
             line = scanner.nextLine();
         }
-        while (Validator.validateWorkerCoordinates(line));
+        while (!Validator.validateWorkerCoordinates(line));
         String[] parsed = line.split(" ");
         Float x = Float.parseFloat(parsed[0]);
         Integer y = Integer.parseInt(parsed[1]);
@@ -60,7 +60,7 @@ public class CollectionElementsReader {
             Invoker.print("Enter object salary(Integer): ");
             line = scanner.nextLine();
         }
-        while (Validator.validateWorkerSalary(line));
+        while (!Validator.validateWorkerSalary(line));
         return Integer.parseInt(line);
     }
 
@@ -75,8 +75,8 @@ public class CollectionElementsReader {
             Invoker.print("Enter object position (MANAGER, HEAD_OF_DEPARTMENT, BAKER, COOK , MANAGER_OF_CLEANING): ");
             line = scanner.nextLine();
         }
-        while (Validator.validateWorkerPosition(line));
-        return Position.valueOf(line);
+        while (!Validator.validateWorkerPosition(line));
+        return Position.valueOf(line.toUpperCase());
     }
 
     /**
@@ -90,8 +90,8 @@ public class CollectionElementsReader {
             Invoker.print("Enter object status (FIRED, HIRED, RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION): ");
             line = scanner.nextLine();
         }
-        while (Validator.validateWorkerStatus(line));
-        return Status.valueOf(line);
+        while (!Validator.validateWorkerStatus(line));
+        return Status.valueOf(line.toUpperCase());
     }
 
     /**
@@ -110,22 +110,22 @@ public class CollectionElementsReader {
             Invoker.print("Enter person passportID(String): ");
             line = scanner.nextLine();
         }
-        while (Validator.validatePersonPassportID(line));
+        while (!Validator.validatePersonPassportID(line));
         passportID = line;
 
         do {
             Invoker.print("Enter person eyeColor (GREEN, RED, BLACK, YELLOW): ");
             line = scanner.nextLine();
         }
-        while (Validator.validatePersonEyeColor(line));
-        eyeColor = EColor.valueOf(line);
+        while (!Validator.validatePersonEyeColor(line));
+        eyeColor = EColor.valueOf(line.toUpperCase());
 
         do {
             Invoker.print("Enter object HairColor (GREEN, RED, BLUE, WHITE, BROWN): ");
             line = scanner.nextLine();
         }
-        while (Validator.validatePersonHairColor(line));
-        hairColor = HColor.valueOf(line);
+        while (!Validator.validatePersonHairColor(line));
+        hairColor = HColor.valueOf(line.toUpperCase());
 
         location = readLocation();
         return new Person(passportID, eyeColor, hairColor, location);
@@ -146,14 +146,14 @@ public class CollectionElementsReader {
             Invoker.print("Enter location x(Long): ");
             line = scanner.nextLine();
         }
-        while (Validator.validateLocationX(line));
+        while (!Validator.validateLocationX(line));
         x = Long.parseLong(line);
 
         do {
             Invoker.print("Enter location y(Long): ");
             line = scanner.nextLine();
         }
-        while (Validator.validateLocationY(line));
+        while (!Validator.validateLocationY(line));
         y = Long.parseLong(line);
 
 
@@ -161,7 +161,7 @@ public class CollectionElementsReader {
             Invoker.print("Enter location name(String): ");
             line = scanner.nextLine();
         }
-        while (Validator.validateLocationName(line));
+        while (!Validator.validateLocationName(line));
         name = line;
         return new Location(x, y, name);
     }

@@ -40,7 +40,8 @@ public class Validator {
             try {
                 Float x = Float.parseFloat(parsed[0]);
                 Integer y = Integer.parseInt(parsed[1]);
-                return true;
+                if (x > -255.0f && y > -131) {
+                    return true;}
             } catch (NumberFormatException e) {
                 Invoker.printError("Coordinates do not match format");
                 return false;
@@ -74,7 +75,7 @@ public class Validator {
      */
     public static boolean validateWorkerPosition(String line) {
         try {
-            Position position = Position.valueOf(line);
+            Position position = Position.valueOf(line.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
             Invoker.printError("Position does not match format");
@@ -90,7 +91,7 @@ public class Validator {
      */
     public static boolean validateWorkerStatus(String line) {
         try {
-            Status status = Status.valueOf(line);
+            Status status = Status.valueOf(line.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
             Invoker.printError("Status does not match format");
@@ -112,7 +113,7 @@ public class Validator {
             }
             return true;
         }
-        Invoker.printError("Person passportIDID does not match format");
+        Invoker.printError("Person passportID does not match format");
         return false;
     }
 
@@ -124,7 +125,7 @@ public class Validator {
      */
     public static boolean validatePersonEyeColor(String line) {
         try {
-            EColor eyeColor = EColor.valueOf(line);
+            EColor eyeColor = EColor.valueOf(line.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
             Invoker.printError("EyeColor does not match format");
@@ -140,7 +141,7 @@ public class Validator {
      */
     public static boolean validatePersonHairColor(String line) {
         try {
-            HColor hairColor = HColor.valueOf(line);
+            HColor hairColor = HColor.valueOf(line.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
             Invoker.printError("HairColor does not match format");

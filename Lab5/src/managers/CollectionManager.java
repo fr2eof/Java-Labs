@@ -4,6 +4,7 @@ package managers;
 import elements.Worker;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
@@ -85,8 +86,8 @@ public class CollectionManager {
      *
      * @return The creation date of the collection.
      */
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public String getCreationDate() {
+        return creationDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     /**

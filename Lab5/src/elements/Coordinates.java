@@ -37,6 +37,11 @@ public class Coordinates {
         this.y = y;
     }
 
+    public String toJson() {
+        return "{\n \"x\":" + this.x + "," +
+                "\n \"y\":" + this.y + "}";
+    }
+
     @Override
     public String toString() {
         return "{\"x\":" + this.x + "," +

@@ -1,8 +1,12 @@
 package managers;
 
 import commands.ICommand;
+import Runner.Runner;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Objects;
+
 
 /**
  * Invoker class responsible for incoming and outgoing data
@@ -27,7 +31,9 @@ public class Invoker {
         // checking the existence of such a command
         if (!commands.containsKey(parsedLine[0]))
             return false;
-
+        if (Objects.equals(parsedLine[0], "execute_script")){
+            Runner.scriptMode = true;
+        }
         ICommand command = commands.get(parsedLine[0]);
         command.execute(args);
         return true;

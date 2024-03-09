@@ -3,6 +3,9 @@ package elements;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import enums.*;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Worker class to creates objects of this class and put they in collection
  */
@@ -76,7 +79,7 @@ public class Worker implements Comparable<Worker> {
     /**
      * Function sets location name
      *
-     * @param name value
+     * @param locName value
      */
     public void setLocName(String locName) {
         loc.setLocName(locName);
@@ -135,14 +138,14 @@ public class Worker implements Comparable<Worker> {
      */
     public String toJson() {
         return "{\"id\":" + this.id + "," +
-                "\"name\":\"" + this.name + "\"," +
-                "\"coordinates\":" + this.coordinates.toString() + "," +
-                "\"creationDate\":\"" + this.creationDate + "\"," +
-                "\"salary\":" + this.salary + "," +
-                "\"startDate\":\"" + this.startDate + "\"," +
-                "\"position\":\"" + this.position + "\"," +
-                "\"status\":\"" + this.status + "\"," +
-                "\"person\":" + this.person.toString() + "}";
+                "\n\"name\":\"" + this.name + "\"," +
+                "\n\"coordinates\":" + this.coordinates.toString() + "," +
+                "\n\"creationDate\":\"" + this.creationDate + "\"," +
+                "\n\"salary\":" + this.salary + "," +
+                "\n\"startDate\":\"" + this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")) + "\"," +
+                "\n\"position\":\"" + this.position + "\"," +
+                "\n\"status\":\"" + this.status + "\"," +
+                "\n\"person\":" + this.person.toJson() + "}";
     }
 
     @Override
@@ -152,10 +155,10 @@ public class Worker implements Comparable<Worker> {
                 "\"coordinates\":" + this.coordinates.toString() + "," +
                 "\"creationDate\":\"" + this.creationDate + "\"," +
                 "\"salary\":" + this.salary + "," +
-                "\"startDate\":\"" + this.startDate + "\"," +
+                "\"startDate\":\"" + this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")) + "\"," +
                 "\"position\":\"" + this.position + "\"," +
                 "\"status\":\"" + this.status + "\"," +
-                "\"person\":" + this.person.toString() + "}";
+                "\"person\":" + this.person.toJson() + "}";
     }
 
     /**

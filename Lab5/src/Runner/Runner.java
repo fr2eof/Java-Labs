@@ -1,3 +1,5 @@
+package Runner;
+
 import commands.*;
 import elements.Worker;
 import managers.CollectionManager;
@@ -15,12 +17,13 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * Runner class starts interactive mode
+ * Runner.Runner class starts interactive mode
  */
 public class Runner {
     private CollectionManager collectionManager;
     public static String path = System.getenv("COLLECTION_FILE_PATH");
-
+    public static boolean scriptMode = false;
+    public static List<String> throwCommand = new ArrayList<>();
 
     public Runner() {
     }
@@ -73,12 +76,24 @@ public class Runner {
     void runCommands() {
         Scanner scanner = new Scanner(System.in);
         Invoker invoker = new Invoker(fillCommandMap());
-        String line;
+        String line = "";
         do {
-            Invoker.print("> ");
-            line = scanner.nextLine();
-            if (!invoker.executeCommand(line))
-                Invoker.printLn("Wrong command");
+            if (scriptMode) {
+                scriptMode = false;
+                for (String cmd : throwCommand) {
+                    if (!invoker.executeCommand(cmd))
+                        Invoker.printLn("Wrong command");
+                }
+                try {
+                    ExecuteScriptCommand.scriptCommandsList.remove(ExecuteScriptCommand.scriptCommandsList.size() - 1);
+                } catch (IndexOutOfBoundsException e) {
+                }
+            } else {
+                Invoker.print("> ");
+                line = scanner.nextLine();
+                if (!invoker.executeCommand(line))
+                    Invoker.printLn("Wrong command");
+            }
         } while (!line.equals("exit"));
     }
 

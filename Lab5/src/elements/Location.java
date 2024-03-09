@@ -49,6 +49,12 @@ public class Location {
         this.name = name;
     }
 
+    public String toJson() {
+        return "\n        {\"locX\":" + this.x + "," +
+                "\n       \"locY\":" + this.y + "," +
+                "\n       \"locName\":\"" + this.name + "\"}";
+    }
+
     @Override
     public String toString() {
         return "{\"locX\":" + this.x + "," +
