@@ -6,6 +6,7 @@ import managers.CollectionManager;
 import managers.Invoker;
 import managers.fileWorkers.FileReading;
 import managers.fileWorkers.FileWriting;
+import output.ConsolePrinter;
 
 
 import java.io.BufferedReader;
@@ -20,14 +21,17 @@ import java.util.*;
  * Runner.Runner class starts interactive mode
  */
 public class Runner {
+    private ConsolePrinter consolePrinter;
     private CollectionManager collectionManager;
     public static String path = System.getenv("COLLECTION_FILE_PATH");
     public static boolean scriptMode = false;
     public static List<String> throwCommand = new ArrayList<>();
+    public List<String> scriptsList = new ArrayList<>();
+    public Set<String> scriptsSet = new HashSet<>();
 
-    public Runner() {
+    public Runner(ConsolePrinter consolePrinter) {
+        this.consolePrinter = consolePrinter;
     }
-
     /**
      * Function populates Command objects into the collection
      *
@@ -35,22 +39,22 @@ public class Runner {
      */
     private Map<String, ICommand> fillCommandMap() {
         Map<String, ICommand> cmdMap = new HashMap<>();
-        ICommand addCommand = new AddCommand(this.collectionManager);
-        ICommand addIfMaxCommand = new AddIfMaxCommand(this.collectionManager);
-        ICommand clearCommand = new ClearCommand(this.collectionManager);
-        ICommand executeScriptCommand = new ExecuteScriptCommand(this.collectionManager);
-        ICommand exitCommand = new ExitCommand();
-        ICommand helpCommand = new HelpCommand();
-        ICommand infoCommand = new InfoCommand(this.collectionManager);
-        ICommand minByldCommand = new MinByIdCommand(this.collectionManager);
-        ICommand printAscending = new PrintAscendingCommand(this.collectionManager);
-        ICommand removeAnyBySalary = new RemoveAnyBySalaryCommand(this.collectionManager);
-        ICommand removeByld = new RemoveByIdCommand(this.collectionManager);
-        ICommand removeFirst = new RemoveFirstCommand(this.collectionManager);
-        ICommand saveCommand = new SaveCommand(this.collectionManager);
-        ICommand showCommand = new ShowCommand(this.collectionManager);
-        ICommand sortCommand = new SortCommand(this.collectionManager);
-        ICommand updateIdCommand = new UpdateIDCommand(this.collectionManager);
+        ICommand addCommand = new AddCommand(this.collectionManager,this.consolePrinter);
+        ICommand addIfMaxCommand = new AddIfMaxCommand(this.collectionManager,this.consolePrinter);
+        ICommand clearCommand = new ClearCommand(this.collectionManager,this.consolePrinter);
+        ICommand executeScriptCommand = new ExecuteScriptCommand(this.collectionManager,this.consolePrinter);
+        ICommand exitCommand = new ExitCommand(this.consolePrinter);
+        ICommand helpCommand = new HelpCommand(this.consolePrinter);
+        ICommand infoCommand = new InfoCommand(this.collectionManager,this.consolePrinter);
+        ICommand minByldCommand = new MinByIdCommand(this.collectionManager,this.consolePrinter);
+        ICommand printAscending = new PrintAscendingCommand(this.collectionManager,this.consolePrinter);
+        ICommand removeAnyBySalary = new RemoveAnyBySalaryCommand(this.collectionManager,this.consolePrinter);
+        ICommand removeByld = new RemoveByIdCommand(this.collectionManager,this.consolePrinter);
+        ICommand removeFirst = new RemoveFirstCommand(this.collectionManager,this.consolePrinter);
+        ICommand saveCommand = new SaveCommand(this.collectionManager,this.consolePrinter);
+        ICommand showCommand = new ShowCommand(this.collectionManager,this.consolePrinter);
+        ICommand sortCommand = new SortCommand(this.collectionManager,this.consolePrinter);
+        ICommand updateIdCommand = new UpdateIDCommand(this.collectionManager,this.consolePrinter);
         cmdMap.put("add", addCommand);
         cmdMap.put("add_if_max", addIfMaxCommand);
         cmdMap.put("clear", clearCommand);
@@ -73,28 +77,46 @@ public class Runner {
     /**
      * Function supports interactive mode until exit command
      */
-    void runCommands() {
+    void runCommands(boolean scriptMode) {
         Scanner scanner = new Scanner(System.in);
         Invoker invoker = new Invoker(fillCommandMap());
         String line = "";
-        do {
-            if (scriptMode) {
-                scriptMode = false;
-                for (String cmd : throwCommand) {
-                    if (!invoker.executeCommand(cmd))
-                        Invoker.printLn("Wrong command");
-                }
-                try {
-                    ExecuteScriptCommand.scriptCommandsList.remove(ExecuteScriptCommand.scriptCommandsList.size() - 1);
-                } catch (IndexOutOfBoundsException e) {
-                }
+        while (!"exit".equals(line=scanner.nextLine())) {
+            if (line == null) {
+                break;
             } else {
-                Invoker.print("> ");
-                line = scanner.nextLine();
-                if (!invoker.executeCommand(line))
-                    Invoker.printLn("Wrong command");
+                if (scriptMode) {
+                    if (line.split(" ").length == 2) {
+                        String[] par = line.split(" ");
+                        if (par[0].equals("execute_script")) {
+                            scriptsList.add(par[1]);
+                            scriptsSet.add(par[1]);
+                            if (scriptsList.size() != scriptsSet.size()) {
+                                consolePrinter.println("Recursion");
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    if (line.split(" ").length == 2) {
+                        String[] par = line.split(" ");
+                        if (par[0].equals("execute_script")) {
+                            scriptsList.clear();
+                            scriptsSet.clear();
+                            scriptsSet.add(par[1]);
+                            scriptsList.add(par[1]);
+                        }
+                    }
+                }
+                if (!invoker.executeCommand(line)) {
+                    consolePrinter.println("Wrong command");
+                }
             }
-        } while (!line.equals("exit"));
+        }
+        if (!scriptsList.isEmpty()) {
+            scriptsSet.remove(scriptsList.get(scriptsList.size() - 1));
+            scriptsList.remove(scriptsList.size() - 1);
+        }
     }
 
     /**
@@ -105,9 +127,9 @@ public class Runner {
         try (Reader reader = new BufferedReader(new FileReader(fileName));) {
             workerCollection = FileReading.fileReading(fileName);
         } catch (FileNotFoundException e) {
-            Invoker.printLn("File does not exist " + fileName);
-        } catch (IOException e) {
-            Invoker.printLn("Can't read file " + fileName);
+            consolePrinter.println("File does not exist " + fileName);
+        } catch (IOException|NullPointerException e) {
+            consolePrinter.println("Can't read file " + fileName);
         }
         List<Worker> workerCollection1 = workerCollection;
         this.collectionManager = new CollectionManager(workerCollection1, LocalDateTime.now());
@@ -119,8 +141,8 @@ public class Runner {
     public void run() {
         FileWriting.setFilePath(path);
         loadFromFile(path);
-        Invoker.printLn("Welcome to the club, Buddy! Use 'help' to see a list of available commands ");
-        runCommands();
+        consolePrinter.println("Welcome to the club, Buddy! Use 'help' to see a list of available commands ");
+        runCommands(false);
     }
 }
 

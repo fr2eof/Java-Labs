@@ -1,15 +1,16 @@
 package commands;
 
 import exceptions.WrongAmountOfArgumentsException;
-import managers.Invoker;
+import output.ConsolePrinter;
 
 /**
  * ExitCommand class to exit the program (without saving to a file)
  */
 public class ExitCommand extends AbstractCommand {
-
-    public ExitCommand() {
-        super("exit", "exit the program (without saving to a file)");
+    private final ConsolePrinter consolePrinter;
+    public ExitCommand(ConsolePrinter consolePrinter) {
+        super("exit", "exit the program (without saving to a file)",consolePrinter);
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -24,7 +25,7 @@ public class ExitCommand extends AbstractCommand {
             System.exit(0);
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("No arguments in " + getName());
+            consolePrinter.printError("No arguments in " + getName());
         }
         return false;
     }

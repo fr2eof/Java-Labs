@@ -4,16 +4,19 @@ import elements.Worker;
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionElementsReader;
 import managers.CollectionManager;
-import managers.Invoker;
+import output.ConsolePrinter;
+
 /**
  * Class of UpdateId command. Update element by id
  */
 public class UpdateIDCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public UpdateIDCommand(CollectionManager collectionManager) {
-        super("update id {element}", "update the value of a collection element whose id is equal to the given one", collectionManager);
+    public UpdateIDCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("update id {element}", "update the value of a collection element whose id is equal to the given one", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -26,16 +29,16 @@ public class UpdateIDCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 1) throw new WrongAmountOfArgumentsException();
-            collectionManager.update(Integer.parseInt(args[0]),new Worker(collectionManager.setId(), CollectionElementsReader.readWorkerName(),
-                    CollectionElementsReader.readWorkerCoordinates(),java.time.LocalDate.now(),
-                    CollectionElementsReader.readWorkerSalary(),java.time.ZonedDateTime.now(),
-                    CollectionElementsReader.readWorkerPosition(),CollectionElementsReader.readWorkerStatus(),
+            collectionManager.update(Integer.parseInt(args[0]), new Worker(Integer.parseInt(args[0]), CollectionElementsReader.readWorkerName(),
+                    CollectionElementsReader.readWorkerCoordinates(), java.time.LocalDate.now(),
+                    CollectionElementsReader.readWorkerSalary(), java.time.ZonedDateTime.now(),
+                    CollectionElementsReader.readWorkerPosition(), CollectionElementsReader.readWorkerStatus(),
                     CollectionElementsReader.readPerson()));
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("One argument in " + getName());
+            consolePrinter.printError("One argument in " + getName());
         } catch (NumberFormatException e) {
-            Invoker.printError("Not Integer in argument " + getName());
+            consolePrinter.printError("Not Integer in argument " + getName());
         }
         return false;
     }

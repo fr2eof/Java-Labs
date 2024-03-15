@@ -1,14 +1,17 @@
 package commands;
 
 import exceptions.WrongAmountOfArgumentsException;
-import managers.Invoker;
+import output.ConsolePrinter;
 
 /**
  * HelpCommand class to display help on available commands
  */
 public class HelpCommand extends AbstractCommand {
-    public HelpCommand() {
-        super("help", "display help on available commands");
+    private final ConsolePrinter consolePrinter;
+
+    public HelpCommand(ConsolePrinter consolePrinter) {
+        super("help", "display help on available commands", consolePrinter);
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -21,7 +24,7 @@ public class HelpCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 0) throw new WrongAmountOfArgumentsException();
-            Invoker.printLn("• help : display help on available commands\n" +
+            consolePrinter.println("• help : display help on available commands\n" +
                     "• info : Print information about the collection (type, initialization date, number of elements, etc.) to standard output.\n" +
                     "• show : Print all collection elements in string representation to standard output\n" +
                     "• add {element} : add a new element to the collection\n" +
@@ -39,7 +42,7 @@ public class HelpCommand extends AbstractCommand {
                     "• print_ascending : print the collection elements in ascending order");
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("No arguments in " + getName());
+            consolePrinter.printError("No arguments in " + getName());
         }
         return false;
     }

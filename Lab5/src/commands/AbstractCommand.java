@@ -1,6 +1,7 @@
 package commands;
 
 import managers.CollectionManager;
+import output.ConsolePrinter;
 
 import java.time.LocalDateTime;
 
@@ -13,16 +14,20 @@ public abstract class AbstractCommand implements ICommand {
     private final String description;
     protected LocalDateTime creationDate;
     private CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public AbstractCommand(String name, String description, CollectionManager collectionManager) {
+
+    public AbstractCommand(String name, String description, CollectionManager collectionManager, ConsolePrinter consolePrinter) {
         this.name = name;
         this.description = description;
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
-    public AbstractCommand(String name, String description) {
+    public AbstractCommand(String name, String description, ConsolePrinter consolePrinter) {
         this.name = name;
         this.description = description;
+        this.consolePrinter = consolePrinter;
     }
 
     /**

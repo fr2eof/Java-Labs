@@ -3,7 +3,7 @@ package commands;
 import Runner.Runner;
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
-import managers.Invoker;
+import output.ConsolePrinter;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,17 +15,19 @@ public class ExecuteScriptCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
     private static Set<String> scriptNameSet = new HashSet<>();
     public static List<String> scriptCommandsList = new ArrayList<>();
+    private ConsolePrinter consolePrinter;
 
-    public ExecuteScriptCommand(CollectionManager collectionManager) {
-        super("execute_script file_name", "read and execute the script from the specified file. The script contains commands in the same form in which the user enters them interactively", collectionManager);
+    public ExecuteScriptCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("execute_script file_name", "read and execute the script from the specified file. The script contains commands in the same form in which the user enters them interactively", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
     @Override
     public boolean execute(String[] args) {
         try {
             if (args.length != 1) throw new WrongAmountOfArgumentsException();
-            BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\inter\\IdeaProjects\\Java-Labs\\Lab5\\src\\resourses\\"+args[0]));
+            BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\inter\\IdeaProjects\\Java-Labs\\Lab5\\src\\resourses\\" + args[0]));
             if (!scriptNameSet.contains(args[0])) {
                 scriptNameSet.add(args[0]);
                 String line;
@@ -38,7 +40,7 @@ public class ExecuteScriptCommand extends AbstractCommand {
                 Runner.throwCommand = scriptCommandsList;
                 return true;
             } else {
-                Invoker.printError("Recursion in file " + args[0]);
+                consolePrinter.printError("Recursion in file " + args[0]);
                 reader.close();
                 scriptNameSet.clear();
                 Runner.throwCommand.clear();
@@ -46,9 +48,9 @@ public class ExecuteScriptCommand extends AbstractCommand {
             }
 
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("One argument in " + getName());
+            consolePrinter.printError("One argument in " + getName());
         } catch (IOException e) {
-            Invoker.printError("Can not read the file " + args[0]);
+            consolePrinter.printError("Can not read the file " + args[0]);
         }
         return false;
     }

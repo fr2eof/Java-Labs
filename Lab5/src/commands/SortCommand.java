@@ -2,17 +2,19 @@ package commands;
 
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
-import managers.Invoker;
+import output.ConsolePrinter;
 
 /**
  * SortCommand class to sort the collection in natural order
  */
 public class SortCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public SortCommand(CollectionManager collectionManager) {
-        super("sort", "sort the collection in natural order", collectionManager);
+    public SortCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("sort", "sort the collection in natural order", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -28,7 +30,7 @@ public class SortCommand extends AbstractCommand {
             collectionManager.sort();
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("No arguments in " + getName());
+            consolePrinter.printError("No arguments in " + getName());
         }
         return false;
     }

@@ -3,7 +3,7 @@ package commands;
 import elements.Worker;
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
-import managers.Invoker;
+import output.ConsolePrinter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,10 +14,12 @@ import java.util.List;
  */
 public class AddIfMaxCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public AddIfMaxCommand(CollectionManager collectionManager) {
-        super("add_if_max", "add a new element to the collection if its value is greater than the value of the largest element of this collection", collectionManager);
+    public AddIfMaxCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("add_if_max", "add a new element to the collection if its value is greater than the value of the largest element of this collection", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -35,7 +37,7 @@ public class AddIfMaxCommand extends AbstractCommand {
 
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("No arguments in " + getName());
+            consolePrinter.printError("No arguments in " + getName());
         }
         return false;
     }

@@ -2,8 +2,8 @@ package commands;
 
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
-import managers.Invoker;
 import managers.fileWorkers.FileWriting;
+import output.ConsolePrinter;
 
 import java.util.ArrayList;
 
@@ -12,11 +12,14 @@ import java.util.ArrayList;
  */
 public class SaveCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public SaveCommand(CollectionManager collectionManager) {
-        super("save", "save the collection to a file", collectionManager);
+    public SaveCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("save", "save the collection to a file", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
+
     /**
      * Function saves the collection to a file
      *
@@ -30,7 +33,7 @@ public class SaveCommand extends AbstractCommand {
             FileWriting.writing(new ArrayList<>(collectionManager.getCollection()));
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("No arguments in " + getName());
+            consolePrinter.printError("No arguments in " + getName());
         }
         return false;
     }

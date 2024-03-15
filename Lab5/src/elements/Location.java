@@ -50,9 +50,9 @@ public class Location {
     }
 
     public String toJson() {
-        return "\n        {\"locX\":" + this.x + "," +
+        return "{\n       \"locX\":" + this.x + "," +
                 "\n       \"locY\":" + this.y + "," +
-                "\n       \"locName\":\"" + this.name + "\"}";
+                "\n       \"locName\":\"" + this.name + "\"\n       }";
     }
 
     @Override

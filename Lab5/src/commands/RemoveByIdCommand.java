@@ -2,17 +2,19 @@ package commands;
 
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
-import managers.Invoker;
+import output.ConsolePrinter;
 
 /**
  * RemoveByIdCommand class to remove an element from the collection by its id
  */
 public class RemoveByIdCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public RemoveByIdCommand(CollectionManager collectionManager) {
-        super("remove_by_id", "remove an element from the collection by its id", collectionManager);
+    public RemoveByIdCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("remove_by_id", "remove an element from the collection by its id", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -28,9 +30,9 @@ public class RemoveByIdCommand extends AbstractCommand {
             collectionManager.delete(Integer.parseInt(args[0]));
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("One arguments in " + getName());
+            consolePrinter.printError("One arguments in " + getName());
         } catch (NumberFormatException e) {
-            Invoker.printError("Not int in argument " + getName());
+            consolePrinter.printError("Not int in argument " + getName());
         }
         return false;
     }

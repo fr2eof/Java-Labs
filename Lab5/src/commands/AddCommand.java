@@ -4,7 +4,7 @@ import elements.Worker;
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionElementsReader;
 import managers.CollectionManager;
-import managers.Invoker;
+import output.ConsolePrinter;
 
 import java.time.LocalDateTime;
 
@@ -13,11 +13,13 @@ import java.time.LocalDateTime;
  */
 public class AddCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public AddCommand(CollectionManager collectionManager) {
-        super("add {element}", "add a new element to the collection", collectionManager);
+    public AddCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("add {element}", "add a new element to the collection", collectionManager,consolePrinter);
         this.creationDate = LocalDateTime.now();
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -37,7 +39,7 @@ public class AddCommand extends AbstractCommand {
                     CollectionElementsReader.readPerson()));
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("No arguments in " + getName());
+            consolePrinter.printError("No arguments in " + getName());
         }
         return false;
     }

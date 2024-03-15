@@ -1,14 +1,19 @@
 package elements;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import enums.*;
+import managers.fileWorkers.ProductDeserializer;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  * Worker class to creates objects of this class and put they in collection
  */
+@JsonDeserialize(using = ProductDeserializer.class)
 public class Worker implements Comparable<Worker> {
     @JsonProperty("id")
     private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
@@ -28,6 +33,7 @@ public class Worker implements Comparable<Worker> {
     private Status status; //Поле может быть null
     @JsonProperty("person")
     private Person person; //Поле не может быть null
+    public static ArrayList<Integer> idArrayList = new ArrayList<>();
 
     public Worker() {
     }
@@ -66,6 +72,36 @@ public class Worker implements Comparable<Worker> {
     public void setLocX(Long x) {
         loc.setLocX(x);
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = ZonedDateTime.parse(startDate,DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX"));
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = LocalDate.parse(creationDate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    public void setID(int id) {
+        this.id = id;
+        idArrayList.add(id);
+    }
+
 
     /**
      * Function sets location 'y' coordinate
@@ -137,28 +173,28 @@ public class Worker implements Comparable<Worker> {
      * @return String json worker fields
      */
     public String toJson() {
-        return "{\"id\":" + this.id + "," +
+        return "{\n\"id\":" + this.id + "," +
                 "\n\"name\":\"" + this.name + "\"," +
-                "\n\"coordinates\":" + this.coordinates.toString() + "," +
+                "\n\"coordinates\":" + cords.toString() + "," +
                 "\n\"creationDate\":\"" + this.creationDate + "\"," +
                 "\n\"salary\":" + this.salary + "," +
                 "\n\"startDate\":\"" + this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")) + "\"," +
                 "\n\"position\":\"" + this.position + "\"," +
                 "\n\"status\":\"" + this.status + "\"," +
-                "\n\"person\":" + this.person.toJson() + "}";
+                "\n\"person\":" + per.toJson() + "\n}";
     }
 
     @Override
     public String toString() {
         return "{\"id\":" + this.id + "," +
                 "\"name\":\"" + this.name + "\"," +
-                "\"coordinates\":" + this.coordinates.toString() + "," +
+                "\"coordinates\":" + cords.toString() + "," +
                 "\"creationDate\":\"" + this.creationDate + "\"," +
                 "\"salary\":" + this.salary + "," +
                 "\"startDate\":\"" + this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")) + "\"," +
                 "\"position\":\"" + this.position + "\"," +
                 "\"status\":\"" + this.status + "\"," +
-                "\"person\":" + this.person.toJson() + "}";
+                "\"person\":" + per.toJson() + "}";
     }
 
     /**

@@ -2,6 +2,7 @@ package managers.fileWorkers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import elements.Worker;
 
@@ -36,7 +37,10 @@ public class FileReading {
         String text = sb.toString().replace("\n", "").replace(" ", "");
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(Worker.class, new ProductDeserializer());
+        mapper.registerModule(module);
+
         return mapper.readValue(text, new TypeReference<ArrayList<Worker>>() {
         });
     }

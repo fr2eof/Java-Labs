@@ -1,7 +1,6 @@
 package elements;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import elements.Location;
 import enums.*;
 
 /**
@@ -64,10 +63,10 @@ public class Person {
     }
 
     public String toJson() {
-        return "\n    {\"passportID\":" + this.passportID + "," +
+        return "{\n   \"passportID\":" + this.passportID + "," +
                 "\n   \"eyeColor\":\"" + this.eyeColor + "\"," +
                 "\n   \"hairColor\":\"" + this.hairColor + "\"," +
-                "\n   \"location\":" + this.location.toJson() + "}";
+                "\n   \"location\":" + this.location.toJson() + "\n   }";
     }
 
     @Override

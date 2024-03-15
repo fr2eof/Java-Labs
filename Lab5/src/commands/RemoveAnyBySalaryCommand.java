@@ -3,19 +3,20 @@ package commands;
 import elements.Worker;
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
-import managers.Invoker;
+import output.ConsolePrinter;
 
-import java.util.ArrayList;
 
 /**
  * RemoveAnyBySalaryCommand class to remove one element from the collection whose salary field value is equivalent to the given one
  */
 public class RemoveAnyBySalaryCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public RemoveAnyBySalaryCommand(CollectionManager collectionManager) {
-        super("remove_any_by_salary", "remove one element from the collection whose salary field value is equivalent to the given one", collectionManager);
+    public RemoveAnyBySalaryCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("remove_any_by_salary", "remove one element from the collection whose salary field value is equivalent to the given one", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -33,12 +34,12 @@ public class RemoveAnyBySalaryCommand extends AbstractCommand {
                     return true;
                 }
             }
-            Invoker.printError("No elements in collection with this salary ");
+            consolePrinter.printError("No elements in collection with this salary ");
 
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("One arguments in " + getName());
+            consolePrinter.printError("One arguments in " + getName());
         } catch (NumberFormatException e) {
-            Invoker.printError("Not Integer in argument " + getName());
+            consolePrinter.printError("Not Integer in argument " + getName());
         }
         return false;
     }

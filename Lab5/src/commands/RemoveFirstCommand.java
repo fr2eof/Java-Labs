@@ -2,17 +2,19 @@ package commands;
 
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
-import managers.Invoker;
+import output.ConsolePrinter;
 
 /**
  * RemoveFirstCommand class to remove the first element from the collection
  */
 public class RemoveFirstCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
+    private final ConsolePrinter consolePrinter;
 
-    public RemoveFirstCommand(CollectionManager collectionManager) {
-        super("remove_first", "remove the first element from the collection", collectionManager);
+    public RemoveFirstCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("remove_first", "remove the first element from the collection", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -28,7 +30,7 @@ public class RemoveFirstCommand extends AbstractCommand {
             collectionManager.delete(0);
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            Invoker.printError("No arguments in " + getName());
+            consolePrinter.printError("No arguments in " + getName());
         }
         return false;
     }
