@@ -8,8 +8,9 @@ import output.ConsolePrinter;
  */
 public class ExitCommand extends AbstractCommand {
     private final ConsolePrinter consolePrinter;
+
     public ExitCommand(ConsolePrinter consolePrinter) {
-        super("exit", "exit the program (without saving to a file)",consolePrinter);
+        super("exit", "exit the program (without saving to a file)", consolePrinter);
         this.consolePrinter = consolePrinter;
     }
 

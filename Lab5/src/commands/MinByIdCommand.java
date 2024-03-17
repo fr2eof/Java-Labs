@@ -34,7 +34,7 @@ public class MinByIdCommand extends AbstractCommand {
             if (args.length != 0) throw new WrongAmountOfArgumentsException();
             List<Worker> copyOfCollection = new ArrayList<>(collectionManager.getCollection());
             Collections.sort(copyOfCollection);
-            collectionManager.delete(copyOfCollection.get(0));
+            consolePrinter.println(copyOfCollection.get(0).toJson());
             return true;
         } catch (WrongAmountOfArgumentsException e) {
             consolePrinter.printError("No arguments in " + getName());

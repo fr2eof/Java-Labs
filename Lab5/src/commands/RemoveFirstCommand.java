@@ -1,8 +1,13 @@
 package commands;
 
+import elements.Worker;
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
 import output.ConsolePrinter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * RemoveFirstCommand class to remove the first element from the collection
@@ -27,7 +32,9 @@ public class RemoveFirstCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 0) throw new WrongAmountOfArgumentsException();
-            collectionManager.delete(0);
+            List<Worker> copyOfCollection = new ArrayList<>(collectionManager.getCollection());
+            Collections.sort(copyOfCollection);
+            collectionManager.delete(copyOfCollection.get(0));
             return true;
         } catch (WrongAmountOfArgumentsException e) {
             consolePrinter.printError("No arguments in " + getName());

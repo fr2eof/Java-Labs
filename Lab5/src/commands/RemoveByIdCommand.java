@@ -27,7 +27,7 @@ public class RemoveByIdCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 1) throw new WrongAmountOfArgumentsException();
-            collectionManager.delete(Integer.parseInt(args[0]));
+            collectionManager.delete(Integer.parseInt(args[0]) - 1);
             return true;
         } catch (WrongAmountOfArgumentsException e) {
             consolePrinter.printError("One arguments in " + getName());

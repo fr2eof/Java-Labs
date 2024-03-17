@@ -3,7 +3,6 @@ package managers.fileWorkers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import elements.Worker;
 
 import java.io.BufferedInputStream;
@@ -34,7 +33,7 @@ public class FileReading {
         }
         fis.close();
         bis.close();
-        String text = sb.toString().replace("\n", "").replace(" ", "");
+        String text = sb.toString().replace("\n", "").trim();
 
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();

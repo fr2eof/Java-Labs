@@ -5,7 +5,6 @@ import enums.EColor;
 import enums.HColor;
 import enums.Position;
 import enums.Status;
-import output.ConsolePrinter;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -19,11 +18,6 @@ import java.util.Set;
  */
 public class Validator {
     static Set<String> personIDSet = new HashSet<>();
-    private static ConsolePrinter consolePrinter;
-
-    public Validator(ConsolePrinter consolePrinter) {
-        this.consolePrinter = consolePrinter;
-    }
 
     /**
      * Check format worker name
@@ -35,7 +29,6 @@ public class Validator {
         if (name != null && name.matches("^[a-zA-Z0-9_]+$")) {
             return true;
         }
-        consolePrinter.printError("Name does not match format");
         return false;
     }
 
@@ -55,11 +48,9 @@ public class Validator {
                     return true;
                 }
             } catch (NumberFormatException e) {
-                consolePrinter.printError("Coordinates do not match format");
                 return false;
             }
         }
-        consolePrinter.printError("Coordinates do not match format");
         return false;
     }
 
@@ -74,7 +65,6 @@ public class Validator {
             Integer salary = Integer.parseInt(line);
             return true;
         } catch (NumberFormatException e) {
-            consolePrinter.printError("Salary does not match format");
             return false;
         }
     }
@@ -90,7 +80,6 @@ public class Validator {
             Position position = Position.valueOf(line.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
-            consolePrinter.printError("Position does not match format");
             return false;
         }
     }
@@ -106,7 +95,6 @@ public class Validator {
             Status status = Status.valueOf(line.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
-            consolePrinter.printError("Status does not match format");
             return false;
         }
     }
@@ -120,12 +108,15 @@ public class Validator {
     public static boolean validatePersonPassportID(String line) {
         if ((4 < line.length()) && (line.length() < 33)) {
             if (personIDSet.contains(line)) {
-                consolePrinter.printError("Person passportID must be unique");
                 return false;
             }
-            return true;
+            try {
+                long personId = Long.parseLong(line);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
         }
-        consolePrinter.printError("Person passportID does not match format");
         return false;
     }
 
@@ -140,7 +131,6 @@ public class Validator {
             EColor eyeColor = EColor.valueOf(line.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
-            consolePrinter.printError("EyeColor does not match format");
             return false;
         }
     }
@@ -156,7 +146,6 @@ public class Validator {
             HColor hairColor = HColor.valueOf(line.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
-            consolePrinter.printError("HairColor does not match format");
             return false;
         }
     }
@@ -172,7 +161,6 @@ public class Validator {
             Long x = Long.parseLong(line);
             return true;
         } catch (NumberFormatException e) {
-            consolePrinter.printError("X does not match format");
             return false;
         }
     }
@@ -188,7 +176,6 @@ public class Validator {
             Long y = Long.parseLong(line);
             return true;
         } catch (NumberFormatException e) {
-            consolePrinter.printError("Y does not match format");
             return false;
         }
     }
@@ -203,7 +190,6 @@ public class Validator {
         if (line != null) {
             return true;
         }
-        consolePrinter.printError("Name does not match format");
         return false;
     }
 
@@ -212,17 +198,15 @@ public class Validator {
             LocalDate localDate = LocalDate.parse(line, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             return true;
         } catch (DateTimeParseException e) {
-            consolePrinter.printError("CreationTime does not match format");
             return false;
         }
     }
 
     public static boolean validateWorkerStartDate(String line) {
         try {
-            ZonedDateTime startDate = ZonedDateTime.parse(line, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX"));
+            ZonedDateTime startDate = ZonedDateTime.parse(line, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
             return true;
         } catch (DateTimeParseException e) {
-            consolePrinter.printError("StartDate does not match format");
             return false;
         }
     }
@@ -233,11 +217,9 @@ public class Validator {
             if (id >= 0 && !Worker.idArrayList.contains(id)) {
                 return true;
             } else {
-                consolePrinter.printError("Id does not match format");
                 return false;
             }
         } catch (NumberFormatException e) {
-            consolePrinter.printError("Id does not match format");
             return false;
         }
     }

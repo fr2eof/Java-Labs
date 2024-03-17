@@ -12,10 +12,9 @@ public abstract class AbstractCommand implements ICommand {
 
     private final String name;
     private final String description;
+    private final CollectionManager collectionManager;
     protected LocalDateTime creationDate;
-    private CollectionManager collectionManager;
     private final ConsolePrinter consolePrinter;
-
 
     public AbstractCommand(String name, String description, CollectionManager collectionManager, ConsolePrinter consolePrinter) {
         this.name = name;
@@ -28,6 +27,7 @@ public abstract class AbstractCommand implements ICommand {
         this.name = name;
         this.description = description;
         this.consolePrinter = consolePrinter;
+        collectionManager = null;
     }
 
     /**

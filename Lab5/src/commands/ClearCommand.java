@@ -14,10 +14,10 @@ public class ClearCommand extends AbstractCommand {
     private final CollectionManager collectionManager;
     private final ConsolePrinter consolePrinter;
 
-    public ClearCommand(CollectionManager collectionManager,ConsolePrinter consolePrinter) {
-        super("clear", "clear the collection", collectionManager,consolePrinter);
+    public ClearCommand(CollectionManager collectionManager, ConsolePrinter consolePrinter) {
+        super("clear", "clear the collection", collectionManager, consolePrinter);
         this.collectionManager = collectionManager;
-        this.consolePrinter =consolePrinter;
+        this.consolePrinter = consolePrinter;
     }
 
     /**
@@ -30,9 +30,7 @@ public class ClearCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 0) throw new WrongAmountOfArgumentsException();
-            for (Worker worker : collectionManager.getCollection()) {
-                consolePrinter.println(worker.toString());
-            }
+            collectionManager.getCollection().clear();
             return true;
         } catch (WrongAmountOfArgumentsException e) {
             consolePrinter.printError("No arguments in " + getName());

@@ -49,14 +49,19 @@ public class Location {
         this.name = name;
     }
 
-    public String toJson() {
+    public String toString() {
+        try{
         return "{\n       \"locX\":" + this.x + "," +
                 "\n       \"locY\":" + this.y + "," +
-                "\n       \"locName\":\"" + this.name + "\"\n       }";
+                "\n       \"locName\":\"" + this.name + "\"\n       }";}
+        catch (NullPointerException e){
+            return "{\n       \"locX\":" + -1 + "," +
+                    "\n       \"locY\":" + -1 + "," +
+                    "\n       \"locName\":\"" + "-1" + "\"\n       }";
+        }
     }
 
-    @Override
-    public String toString() {
+    public String toJson() {
         return "{\"locX\":" + this.x + "," +
                 "\"locY\":" + this.y + "," +
                 "\"locName\":\"" + this.name + "\"}";

@@ -12,7 +12,6 @@ import java.util.List;
  * Class for working with a collection
  */
 public class CollectionManager {
-    private static int id;
     private final LocalDateTime creationDate;
     private final List<Worker> workerCollection;
 
@@ -28,7 +27,6 @@ public class CollectionManager {
      */
     public void add(Worker element) {
         workerCollection.add(element);
-        id += 1;
     }
 
     /**
@@ -37,7 +35,7 @@ public class CollectionManager {
      * @return id element
      */
     public int setId() {
-        return id;
+        return getCollection().size() + 1;
     }
 
     /**

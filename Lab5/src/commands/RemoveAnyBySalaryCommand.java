@@ -31,6 +31,7 @@ public class RemoveAnyBySalaryCommand extends AbstractCommand {
             if (args.length != 1) throw new WrongAmountOfArgumentsException();
             for (Worker worker : collectionManager.getCollection()) {
                 if (worker.getSalary() == Integer.parseInt(args[0])) {
+                    collectionManager.delete(worker);
                     return true;
                 }
             }

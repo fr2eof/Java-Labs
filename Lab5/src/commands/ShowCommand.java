@@ -29,8 +29,9 @@ public class ShowCommand extends AbstractCommand {
         try {
             if (args.length != 0) throw new WrongAmountOfArgumentsException();
             for (Worker worker : collectionManager.getCollection()) {
-                if (worker!=null){
-                    consolePrinter.println(worker.toJson());}
+                if (worker != null) {
+                    consolePrinter.println(worker.toString());
+                }
             }
             return true;
         } catch (WrongAmountOfArgumentsException e) {

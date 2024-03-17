@@ -61,19 +61,29 @@ public class Person {
     public void setLocation(Location location) {
         this.location = location;
     }
+    public Location getLocation() {
+        return location;
+    }
 
-    public String toJson() {
+    public String toString() {
+        try{
         return "{\n   \"passportID\":" + this.passportID + "," +
                 "\n   \"eyeColor\":\"" + this.eyeColor + "\"," +
                 "\n   \"hairColor\":\"" + this.hairColor + "\"," +
-                "\n   \"location\":" + this.location.toJson() + "\n   }";
+                "\n   \"location\":" + this.location.toString() + "\n   }";}
+        catch (NullPointerException e){
+            return "{\n   \"passportID\":" + "-1" + "," +
+                    "\n   \"eyeColor\":\"" + "" + "\"," +
+                    "\n   \"hairColor\":\"" + "" + "\"," +
+                    "\n   \"location\":" + "" + "\n   }";
+        }
     }
 
-    @Override
-    public String toString() {
+
+    public String toJson(Location location) {
         return "{\"passportID\":" + this.passportID + "," +
                 "\"eyeColor\":\"" + this.eyeColor + "\"," +
                 "\"hairColor\":\"" + this.hairColor + "\"," +
-                "\"location\":" + this.location.toString() + "}";
+                "\"location\":" + location.toJson() + "}";
     }
 }

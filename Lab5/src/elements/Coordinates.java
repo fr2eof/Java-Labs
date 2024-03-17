@@ -39,7 +39,12 @@ public class Coordinates {
 
     @Override
     public String toString() {
-        return "{\"x\":" + this.x + "," +
-                "\"y\":" + this.y + "}";
+        try {
+            return "{\"x\":" + this.x + "," +
+                    "\"y\":" + this.y + "}";
+        } catch (NullPointerException e) {
+            return "{\"x\":" + -1 + "," +
+                    "\"y\":" + -1 + "}";
+        }
     }
 }

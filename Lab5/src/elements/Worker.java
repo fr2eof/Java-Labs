@@ -20,7 +20,7 @@ public class Worker implements Comparable<Worker> {
     @JsonProperty("name")
     private String name; //Поле не может быть null, Строка не может быть пустой
     @JsonProperty("coordinates")
-    private Coordinates coordinates; //Поле не может быть null
+    private Coordinates coordinates = new Coordinates(); //Поле не может быть null
     @JsonProperty("creationDate")
     private java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     @JsonProperty("salary")
@@ -32,8 +32,9 @@ public class Worker implements Comparable<Worker> {
     @JsonProperty("status")
     private Status status; //Поле может быть null
     @JsonProperty("person")
-    private Person person; //Поле не может быть null
+    private Person person = new Person(); //Поле не может быть null
     public static ArrayList<Integer> idArrayList = new ArrayList<>();
+    private Location location = new Location();
 
     public Worker() {
     }
@@ -57,32 +58,38 @@ public class Worker implements Comparable<Worker> {
      * @return The salary of the worker.
      */
     public Integer getSalary() {
-        return this.salary;
+        return salary;
     }
 
-    Location loc = new Location();
-    Person per = new Person();
-    Coordinates cords = new Coordinates();
+    public Person getPerson() {
+        return person;
+    }
 
-    /**
-     * Function sets location 'x' coordinate
-     *
-     * @param x value
-     */
-    public void setLocX(Long x) {
-        loc.setLocX(x);
+
+    public void setID(int id) {
+        this.id = id;
+        idArrayList.add(id);
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
     public void setSalary(Integer salary) {
         this.salary = salary;
     }
 
+    public void setCreationDate(String creationDate) {
+        this.creationDate = LocalDate.parse(creationDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
     public void setStartDate(String startDate) {
-        this.startDate = ZonedDateTime.parse(startDate,DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX"));
+
+        this.startDate = ZonedDateTime.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z"));
     }
 
     public void setStatus(Status status) {
@@ -93,15 +100,14 @@ public class Worker implements Comparable<Worker> {
         this.position = position;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = LocalDate.parse(creationDate,DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public void setID(int id) {
-        this.id = id;
-        idArrayList.add(id);
-    }
 
+    public void setLocX(Long x) {
+        location.setLocX(x);
+    }
 
     /**
      * Function sets location 'y' coordinate
@@ -109,7 +115,7 @@ public class Worker implements Comparable<Worker> {
      * @param y value
      */
     public void setLocY(Long y) {
-        loc.setLocY(y);
+        location.setLocY(y);
     }
 
     /**
@@ -118,7 +124,7 @@ public class Worker implements Comparable<Worker> {
      * @param locName value
      */
     public void setLocName(String locName) {
-        loc.setLocName(locName);
+        location.setLocName(locName);
     }
 
     /**
@@ -127,7 +133,7 @@ public class Worker implements Comparable<Worker> {
      * @param passportID value
      */
     public void setPersonPassportId(String passportID) {
-        per.setPassportID(passportID);
+        person.setPassportID(passportID);
     }
 
     /**
@@ -136,7 +142,7 @@ public class Worker implements Comparable<Worker> {
      * @param EColor value
      */
     public void setEyeColor(EColor EColor) {
-        per.setEyeColor(EColor);
+        person.setEyeColor(EColor);
     }
 
     /**
@@ -145,8 +151,8 @@ public class Worker implements Comparable<Worker> {
      * @param HColor value
      */
     public void setHairColor(HColor HColor) {
-        per.setHairColor(HColor);
-        per.setLocation(loc);
+        person.setHairColor(HColor);
+        person.setLocation(location);
     }
 
     /**
@@ -155,7 +161,7 @@ public class Worker implements Comparable<Worker> {
      * @param x value
      */
     public void setX(Float x) {
-        cords.setX(x);
+        coordinates.setX(x);
     }
 
     /**
@@ -164,7 +170,11 @@ public class Worker implements Comparable<Worker> {
      * @param y value
      */
     public void setY(Integer y) {
-        cords.setY(y);
+        coordinates.setY(y);
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     /**
@@ -172,29 +182,42 @@ public class Worker implements Comparable<Worker> {
      *
      * @return String json worker fields
      */
-    public String toJson() {
-        return "{\n\"id\":" + this.id + "," +
-                "\n\"name\":\"" + this.name + "\"," +
-                "\n\"coordinates\":" + cords.toString() + "," +
-                "\n\"creationDate\":\"" + this.creationDate + "\"," +
-                "\n\"salary\":" + this.salary + "," +
-                "\n\"startDate\":\"" + this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")) + "\"," +
-                "\n\"position\":\"" + this.position + "\"," +
-                "\n\"status\":\"" + this.status + "\"," +
-                "\n\"person\":" + per.toJson() + "\n}";
+    public String toString() {
+        try {
+            return "{\n\"id\":" + id + "," +
+                    "\n\"name\":\"" + name + "\"," +
+                    "\n\"coordinates\":" + coordinates.toString() + "," +
+                    "\n\"creationDate\":\"" + creationDate + "\"," +
+                    "\n\"salary\":" + salary + "," +
+                    "\n\"startDate\":\"" + startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")) + "\"," +
+                    "\n\"position\":\"" + position + "\"," +
+                    "\n\"status\":\"" + status + "\"," +
+                    "\n\"person\":" + person.toString() + "\n}";
+        } catch (NullPointerException e) {
+            return "{\n\"id\":" + -1 + "," +
+                    "\n\"name\":\"" + "this.name" + "\"," +
+                    "\n\"coordinates\":" + "this.coordinates.toString()" + "," +
+                    "\n\"creationDate\":\"" + "this.creationDate" + "\"," +
+                    "\n\"salary\":" + "this.salary" + "," +
+                    "\n\"startDate\":\"" + "this.startDate.format(DateTimeFormatter.ofPattern())" + "\"," +
+                    "\n\"position\":\"" + "this.position" + "\"," +
+                    "\n\"status\":\"" + "this.status" + "\"," +
+                    "\n\"person\":" + "person.toString()" + "\n}";
+        }
     }
 
-    @Override
-    public String toString() {
-        return "{\"id\":" + this.id + "," +
-                "\"name\":\"" + this.name + "\"," +
-                "\"coordinates\":" + cords.toString() + "," +
-                "\"creationDate\":\"" + this.creationDate + "\"," +
-                "\"salary\":" + this.salary + "," +
-                "\"startDate\":\"" + this.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")) + "\"," +
-                "\"position\":\"" + this.position + "\"," +
-                "\"status\":\"" + this.status + "\"," +
-                "\"person\":" + per.toJson() + "}";
+    public String toJson() {
+        return "{\"id\":" + id + "," +
+                "\"name\":\"" + name + "\"," +
+                "\"coordinates\":" + coordinates.toString() + "," +
+                "\"creationDate\":\"" + creationDate + "\"," +
+                "\"salary\":" + salary + "," +
+                "\"startDate\":\"" + startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")) + "\"," +
+                "\"position\":\"" + position + "\"," +
+                "\"status\":\"" + status + "\"," +
+                "\"person\":" + person.toJson(location) + "}";
+
+
     }
 
     /**

@@ -29,7 +29,6 @@ public class FileWriting {
      */
     public static void writing(ArrayList<Worker> coll) {
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
-            // convert string to bytes
             fos.write("[".getBytes());
             for (Worker elem : coll) {
                 fos.write(elem.toJson().getBytes(StandardCharsets.UTF_8));
@@ -40,8 +39,8 @@ public class FileWriting {
             fos.write("]".getBytes());
             fos.flush();
             System.out.println("File was written successfully");
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Collection was not written into file");
         }
     }
 }

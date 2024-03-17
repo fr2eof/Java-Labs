@@ -1,5 +1,6 @@
 package managers;
 
+import Runner.Runner;
 import elements.Coordinates;
 import elements.Location;
 import elements.Person;
@@ -7,31 +8,51 @@ import enums.EColor;
 import enums.HColor;
 import enums.Position;
 import enums.Status;
+import exceptions.ScriptReadingException;
 import output.ConsolePrinter;
 
-import java.io.PrintStream;
-import java.util.Scanner;
+import java.io.*;
+
+import static Runner.Runner.scriptMode;
 
 /**
  * CollectionElementsReader class to read and set to validating fields of elements
  */
 public class CollectionElementsReader {
-    static Scanner scanner = new Scanner(System.in);
-    static ConsolePrinter consolePrinter = new ConsolePrinter(new PrintStream(System.out));
+    private ConsolePrinter consolePrinter;
+
+    public CollectionElementsReader(ConsolePrinter consolePrinter) {
+        this.consolePrinter = consolePrinter;
+    }
+
+    BufferedReader br = Runner.bufferedReader;
 
     /**
      * Reads worker name until it passes the test
      *
      * @return The name of the worker
      */
-    public static String readWorkerName() {
+    public String readWorkerName() throws IOException {
         String line;
-        do {
-            consolePrinter.print("Enter object name(String): ");
-            line = scanner.nextLine();
+        if (!scriptMode) {
+            br = new BufferedReader(new InputStreamReader(System.in));
+            do {
+                consolePrinter.print("Enter object name(String): ");
+                line = br.readLine();
+            }
+            while (!Validator.validateWorkerName(line));
+            return line;
+        } else {
+            try {
+                line = br.readLine();
+                if (Validator.validateWorkerName(line)) {
+                    return line;
+                }
+                throw new ScriptReadingException();
+            } catch (NullPointerException e) {
+                throw new ScriptReadingException();
+            }
         }
-        while (!Validator.validateWorkerName(line));
-        return line;
     }
 
     /**
@@ -39,17 +60,34 @@ public class CollectionElementsReader {
      *
      * @return The coordinates of the worker
      */
-    public static Coordinates readWorkerCoordinates() {
+    public Coordinates readWorkerCoordinates() throws IOException {
         String line;
-        do {
-            consolePrinter.print("Enter object coordinates(x(Float) y(Integer)): ");
-            line = scanner.nextLine();
+        if (!scriptMode) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            do {
+                consolePrinter.print("Enter object coordinates(x(Float) y(Integer)): ");
+                line = br.readLine();
+            }
+            while (!Validator.validateWorkerCoordinates(line));
+            String[] parsed = line.split(" ");
+            Float x = Float.parseFloat(parsed[0]);
+            Integer y = Integer.parseInt(parsed[1]);
+            return new Coordinates(x, y);
+        } else {
+            try {
+                line = br.readLine();
+                if (Validator.validateWorkerCoordinates(line)) {
+                    String[] parsed = line.split(" ");
+                    Float x = Float.parseFloat(parsed[0]);
+                    Integer y = Integer.parseInt(parsed[1]);
+                    return new Coordinates(x, y);
+                }
+                throw new ScriptReadingException();
+            } catch (NullPointerException | IOException e) {
+                throw new ScriptReadingException();
+            }
         }
-        while (!Validator.validateWorkerCoordinates(line));
-        String[] parsed = line.split(" ");
-        Float x = Float.parseFloat(parsed[0]);
-        Integer y = Integer.parseInt(parsed[1]);
-        return new Coordinates(x, y);
+
     }
 
     /**
@@ -57,14 +95,27 @@ public class CollectionElementsReader {
      *
      * @return The salary of the worker
      */
-    public static Integer readWorkerSalary() {
+    public Integer readWorkerSalary() throws IOException {
         String line;
-        do {
-            consolePrinter.print("Enter object salary(Integer): ");
-            line = scanner.nextLine();
+        if (!scriptMode) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            do {
+                consolePrinter.print("Enter object salary(Integer): ");
+                line = br.readLine();
+            }
+            while (!Validator.validateWorkerSalary(line));
+            return Integer.parseInt(line);
+        } else {
+            try {
+                line = br.readLine();
+                if (Validator.validateWorkerSalary(line)) {
+                    return Integer.parseInt(line);
+                }
+                throw new ScriptReadingException();
+            } catch (NullPointerException e) {
+                throw new ScriptReadingException();
+            }
         }
-        while (!Validator.validateWorkerSalary(line));
-        return Integer.parseInt(line);
     }
 
     /**
@@ -72,14 +123,27 @@ public class CollectionElementsReader {
      *
      * @return The position of the worker
      */
-    public static Position readWorkerPosition() {
+    public Position readWorkerPosition() throws IOException {
         String line;
-        do {
-            consolePrinter.print("Enter object position (MANAGER, HEAD_OF_DEPARTMENT, BAKER, COOK , MANAGER_OF_CLEANING): ");
-            line = scanner.nextLine();
+        if (!scriptMode) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            do {
+                consolePrinter.print("Enter object position (MANAGER, HEAD_OF_DEPARTMENT, BAKER, COOK , MANAGER_OF_CLEANING): ");
+                line = br.readLine();
+            }
+            while (!Validator.validateWorkerPosition(line));
+            return Position.valueOf(line.toUpperCase());
+        } else {
+            try {
+                line = br.readLine();
+                if (Validator.validateWorkerPosition(line)) {
+                    return Position.valueOf(line.toUpperCase());
+                }
+                throw new ScriptReadingException();
+            } catch (NullPointerException e) {
+                throw new ScriptReadingException();
+            }
         }
-        while (!Validator.validateWorkerPosition(line));
-        return Position.valueOf(line.toUpperCase());
     }
 
     /**
@@ -87,14 +151,27 @@ public class CollectionElementsReader {
      *
      * @return The name of the status
      */
-    public static Status readWorkerStatus() {
+    public Status readWorkerStatus() throws IOException {
         String line;
-        do {
-            consolePrinter.print("Enter object status (FIRED, HIRED, RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION): ");
-            line = scanner.nextLine();
+        if (!scriptMode) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            do {
+                consolePrinter.print("Enter object status (FIRED, HIRED, RECOMMENDED_FOR_PROMOTION, REGULAR, PROBATION): ");
+                line = br.readLine();
+            }
+            while (!Validator.validateWorkerStatus(line));
+            return Status.valueOf(line.toUpperCase());
+        } else {
+            try {
+                line = br.readLine();
+                if (Validator.validateWorkerStatus(line)) {
+                    return Status.valueOf(line.toUpperCase());
+                }
+                throw new ScriptReadingException();
+            } catch (NullPointerException e) {
+                throw new ScriptReadingException();
+            }
         }
-        while (!Validator.validateWorkerStatus(line));
-        return Status.valueOf(line.toUpperCase());
     }
 
     /**
@@ -102,36 +179,59 @@ public class CollectionElementsReader {
      *
      * @return The new object of Person class
      */
-    public static Person readPerson() {
-        consolePrinter.println("Enter object person: ");
+    public Person readPerson() throws IOException {
         String line;
         String passportID;
         EColor eyeColor;
         HColor hairColor;
         Location location;
-        do {
-            consolePrinter.print("Enter person passportID(String): ");
-            line = scanner.nextLine();
-        }
-        while (!Validator.validatePersonPassportID(line));
-        passportID = line;
+        if (!scriptMode) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            do {
+                consolePrinter.println("Enter object person: ");
+                consolePrinter.print("Enter person passportID(String): ");
+                line = br.readLine();
+            }
+            while (!Validator.validatePersonPassportID(line));
+            passportID = line;
 
-        do {
-            consolePrinter.print("Enter person eyeColor (GREEN, RED, BLACK, YELLOW): ");
-            line = scanner.nextLine();
-        }
-        while (!Validator.validatePersonEyeColor(line));
-        eyeColor = EColor.valueOf(line.toUpperCase());
+            do {
+                consolePrinter.print("Enter person eyeColor (GREEN, RED, BLACK, YELLOW): ");
+                line = br.readLine();
+            }
+            while (!Validator.validatePersonEyeColor(line));
+            eyeColor = EColor.valueOf(line.toUpperCase());
 
-        do {
-            consolePrinter.print("Enter object HairColor (GREEN, RED, BLUE, WHITE, BROWN): ");
-            line = scanner.nextLine();
-        }
-        while (!Validator.validatePersonHairColor(line));
-        hairColor = HColor.valueOf(line.toUpperCase());
+            do {
+                consolePrinter.print("Enter object HairColor (GREEN, RED, BLUE, WHITE, BROWN): ");
+                line = br.readLine();
+            }
+            while (!Validator.validatePersonHairColor(line));
+            hairColor = HColor.valueOf(line.toUpperCase());
 
-        location = readLocation();
-        return new Person(passportID, eyeColor, hairColor, location);
+            location = readLocation();
+            return new Person(passportID, eyeColor, hairColor, location);
+        } else {
+            try {
+                line = br.readLine();
+                if (Validator.validatePersonPassportID(line)) {
+                    passportID = line;
+                    line = br.readLine();
+                    if (Validator.validatePersonEyeColor(line)) {
+                        eyeColor = EColor.valueOf(line.toUpperCase());
+                        line = br.readLine();
+                        if (Validator.validatePersonHairColor(line)) {
+                            hairColor = HColor.valueOf(line.toUpperCase());
+                            location = readLocation();
+                            return new Person(passportID, eyeColor, hairColor, location);
+                        }
+                    }
+                }
+                throw new ScriptReadingException();
+            } catch (NullPointerException e) {
+                throw new ScriptReadingException();
+            }
+        }
     }
 
     /**
@@ -139,33 +239,55 @@ public class CollectionElementsReader {
      *
      * @return The new object of Location class
      */
-    public static Location readLocation() {
-        consolePrinter.println("Enter person location: ");
+    public Location readLocation() throws IOException {
         String line;
         String name;
         long x;
         long y;
-        do {
-            consolePrinter.print("Enter location x(Long): ");
-            line = scanner.nextLine();
-        }
-        while (!Validator.validateLocationX(line));
-        x = Long.parseLong(line);
+        if (!scriptMode) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            do {
+                consolePrinter.println("Enter person location: ");
+                consolePrinter.print("Enter location x(Long): ");
+                line = br.readLine();
+            }
+            while (!Validator.validateLocationX(line));
+            x = Long.parseLong(line);
 
-        do {
-            consolePrinter.print("Enter location y(Long): ");
-            line = scanner.nextLine();
-        }
-        while (!Validator.validateLocationY(line));
-        y = Long.parseLong(line);
+            do {
+                consolePrinter.print("Enter location y(Long): ");
+                line = br.readLine();
+            }
+            while (!Validator.validateLocationY(line));
+            y = Long.parseLong(line);
 
 
-        do {
-            consolePrinter.print("Enter location name(String): ");
-            line = scanner.nextLine();
+            do {
+                consolePrinter.print("Enter location name(String): ");
+                line = br.readLine();
+            }
+            while (!Validator.validateLocationName(line));
+            name = line;
+            return new Location(x, y, name);
+        } else {
+            try {
+                line = br.readLine();
+                if (Validator.validateLocationX(line)) {
+                    x = Long.parseLong(line);
+                    line = br.readLine();
+                    if (Validator.validateLocationY(line)) {
+                        y = Long.parseLong(line);
+                        line = br.readLine();
+                        if (Validator.validateLocationName(line)) {
+                            name = line;
+                            return new Location(x, y, name);
+                        }
+                    }
+                }
+                throw new ScriptReadingException();
+            } catch (NullPointerException e) {
+                throw new ScriptReadingException();
+            }
         }
-        while (!Validator.validateLocationName(line));
-        name = line;
-        return new Location(x, y, name);
     }
 }

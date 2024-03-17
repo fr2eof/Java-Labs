@@ -6,6 +6,8 @@ import managers.CollectionElementsReader;
 import managers.CollectionManager;
 import output.ConsolePrinter;
 
+import java.io.IOException;
+
 /**
  * Class of UpdateId command. Update element by id
  */
@@ -29,16 +31,19 @@ public class UpdateIDCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 1) throw new WrongAmountOfArgumentsException();
-            collectionManager.update(Integer.parseInt(args[0]), new Worker(Integer.parseInt(args[0]), CollectionElementsReader.readWorkerName(),
-                    CollectionElementsReader.readWorkerCoordinates(), java.time.LocalDate.now(),
-                    CollectionElementsReader.readWorkerSalary(), java.time.ZonedDateTime.now(),
-                    CollectionElementsReader.readWorkerPosition(), CollectionElementsReader.readWorkerStatus(),
-                    CollectionElementsReader.readPerson()));
+            CollectionElementsReader collectionElementsReader = new CollectionElementsReader(this.consolePrinter);
+            this.collectionManager.update(Integer.parseInt(args[0]), new Worker(Integer.parseInt(args[0]), collectionElementsReader.readWorkerName(),
+                    collectionElementsReader.readWorkerCoordinates(), java.time.LocalDate.now(),
+                    collectionElementsReader.readWorkerSalary(), java.time.ZonedDateTime.now(),
+                    collectionElementsReader.readWorkerPosition(), collectionElementsReader.readWorkerStatus(),
+                    collectionElementsReader.readPerson()));
             return true;
         } catch (WrongAmountOfArgumentsException e) {
-            consolePrinter.printError("One argument in " + getName());
+            this.consolePrinter.printError("One argument in " + getName());
         } catch (NumberFormatException e) {
-            consolePrinter.printError("Not Integer in argument " + getName());
+            this.consolePrinter.printError("Not Integer in argument " + getName());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return false;
     }
