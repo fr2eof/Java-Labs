@@ -2,16 +2,19 @@ package managers.fileWorkers;
 
 import elements.Worker;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * FileWriting class to put collection to file
  */
 public class FileWriting {
     static String filePath;
+
 
     /**
      * Function sets the file path
@@ -25,9 +28,10 @@ public class FileWriting {
     /**
      * Function writes collection to file
      *
-     * @param coll worker collection
+     * @param workerArrayList worker collection
      */
-    public static void writing(ArrayList<Worker> coll) {
+    public static void writing(ArrayList<Worker> workerArrayList) {
+        /* here i used IO
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             fos.write("[".getBytes());
             for (Worker elem : coll) {
@@ -38,6 +42,21 @@ public class FileWriting {
             }
             fos.write("]".getBytes());
             fos.flush();
+         */
+        try {
+            // here i used NIO
+            StringBuilder jsonString = new StringBuilder("[");
+            String data = workerArrayList.stream()
+                    .map(Worker::toJson)
+                    .collect(Collectors.collectingAndThen(
+                            Collectors.toList(),
+                            list -> String.join(",\n", list)));
+            jsonString.append(data);
+            jsonString.append("]");
+
+            Path path = Paths.get(filePath);
+            Files.writeString(path, jsonString.toString());
+
             System.out.println("File was written successfully");
         } catch (IOException | NullPointerException e) {
             System.out.println("Collection was not written into file");

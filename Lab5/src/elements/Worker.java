@@ -64,6 +64,9 @@ public class Worker implements Comparable<Worker> {
     public Person getPerson() {
         return person;
     }
+    public Integer getId() {
+        return id;
+    }
 
 
     public void setID(int id) {

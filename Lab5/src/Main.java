@@ -7,7 +7,7 @@ import java.io.PrintStream;
 
 /**
  * @author Ivanov Ilya "iiilya12@yandex.ru"
- * @version 1.0
+ * @version 2.0
  */
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -17,7 +17,13 @@ public class Main {
 /*
 доп:
 streamChainer в коде
+min by id
+print ascending
+remove any by salary
+file writing
+
+
 как можно больше нио
-buffers использовать в коде
-https://docs.oracle.com/javase/8/docs/api/java/nio/package-summary.html
+file reading
+file writing
  */

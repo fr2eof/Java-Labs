@@ -5,9 +5,6 @@ import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
 import output.ConsolePrinter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * MaxByIdCommand class to display any object from the collection whose id field value is minimal
@@ -32,9 +29,14 @@ public class MinByIdCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 0) throw new WrongAmountOfArgumentsException();
-            List<Worker> copyOfCollection = new ArrayList<>(collectionManager.getCollection());
-            Collections.sort(copyOfCollection);
-            consolePrinter.println(copyOfCollection.get(0).toJson());
+            collectionManager.getCollection().stream()
+                    .map(Worker::getId)
+                    .sorted()
+                    .findFirst()
+                    .ifPresent(id -> collectionManager.getCollection().stream()
+                            .filter(worker -> worker.getId() == id)
+                            .findFirst()
+                            .ifPresent(worker -> consolePrinter.println(worker.toString())));
             return true;
         } catch (WrongAmountOfArgumentsException e) {
             consolePrinter.printError("No arguments in " + getName());

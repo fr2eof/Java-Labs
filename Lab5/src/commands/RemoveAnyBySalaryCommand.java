@@ -1,9 +1,9 @@
 package commands;
 
-import elements.Worker;
 import exceptions.WrongAmountOfArgumentsException;
 import managers.CollectionManager;
 import output.ConsolePrinter;
+
 
 
 /**
@@ -29,13 +29,12 @@ public class RemoveAnyBySalaryCommand extends AbstractCommand {
     public boolean execute(String[] args) {
         try {
             if (args.length != 1) throw new WrongAmountOfArgumentsException();
-            for (Worker worker : collectionManager.getCollection()) {
-                if (worker.getSalary() == Integer.parseInt(args[0])) {
-                    collectionManager.delete(worker);
-                    return true;
-                }
-            }
-            consolePrinter.printError("No elements in collection with this salary ");
+            collectionManager.getCollection().stream()
+                    .filter(worker -> worker.getSalary() == Integer.parseInt(args[0]))
+                    .findFirst()
+                    .ifPresentOrElse(collectionManager::delete,
+                            () -> consolePrinter.printError("No elements in collection with this salary "));
+            return true;
 
         } catch (WrongAmountOfArgumentsException e) {
             consolePrinter.printError("One arguments in " + getName());

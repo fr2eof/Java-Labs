@@ -97,6 +97,10 @@ public class CollectionManager {
         return workerCollection;
     }
 
+    public Worker getWorkerById(Integer id) {
+        return workerCollection.get(id-1);
+    }
+
     /**
      * This function returns a string that contains information about the collection
      *

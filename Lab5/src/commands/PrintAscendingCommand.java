@@ -6,7 +6,6 @@ import managers.CollectionManager;
 import output.ConsolePrinter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,10 +32,7 @@ public class PrintAscendingCommand extends AbstractCommand {
         try {
             if (args.length != 0) throw new WrongAmountOfArgumentsException();
             List<Worker> copyOfCollection = new ArrayList<>(collectionManager.getCollection());
-            Collections.sort(copyOfCollection);
-            for (Worker worker : copyOfCollection) {
-                consolePrinter.println(worker.toString());
-            }
+            copyOfCollection.stream().sorted().forEach(worker -> consolePrinter.println(worker.toString()));
             return true;
         } catch (WrongAmountOfArgumentsException e) {
             consolePrinter.printError("No arguments in " + getName());

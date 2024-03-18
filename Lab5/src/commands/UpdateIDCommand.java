@@ -7,6 +7,8 @@ import managers.CollectionManager;
 import output.ConsolePrinter;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Class of UpdateId command. Update element by id
@@ -32,11 +34,18 @@ public class UpdateIDCommand extends AbstractCommand {
         try {
             if (args.length != 1) throw new WrongAmountOfArgumentsException();
             CollectionElementsReader collectionElementsReader = new CollectionElementsReader(this.consolePrinter);
-            this.collectionManager.update(Integer.parseInt(args[0]), new Worker(Integer.parseInt(args[0]), collectionElementsReader.readWorkerName(),
-                    collectionElementsReader.readWorkerCoordinates(), java.time.LocalDate.now(),
-                    collectionElementsReader.readWorkerSalary(), java.time.ZonedDateTime.now(),
-                    collectionElementsReader.readWorkerPosition(), collectionElementsReader.readWorkerStatus(),
-                    collectionElementsReader.readPerson()));
+            Worker worker = new Worker();
+            worker.setID(Integer.parseInt(args[0]));
+            worker.setName(collectionElementsReader.readWorkerName());
+            worker.setCoordinates(collectionElementsReader.readWorkerCoordinates());
+            worker.setCreationDate(String.valueOf(java.time.LocalDate.now()));
+            worker.setSalary(collectionElementsReader.readWorkerSalary());
+            worker.setStartDate(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")));
+            worker.setPosition(collectionElementsReader.readWorkerPosition());
+            worker.setStatus(collectionElementsReader.readWorkerStatus());
+            worker.setPerson(collectionElementsReader.readPerson());
+            worker.setLocation(worker.getPerson().getLocation());
+            this.collectionManager.update(Integer.parseInt(args[0]) - 1, worker);
             return true;
         } catch (WrongAmountOfArgumentsException e) {
             this.consolePrinter.printError("One argument in " + getName());
