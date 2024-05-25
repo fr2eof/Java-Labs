@@ -95,8 +95,7 @@ public class Main {
 
         auth(Auth.auth(), requestSender);
 
-        //todo передачу юзера насmроить
-//todo приневерном количестве чтоб не ждала прога ответа
+//todo при неверном количестве чтоб не ждала прога ответа
         try {
             commandResponseDto = (CommandResponseDto) Transformer.readObject(responseHandler.receiveResponse());
         } catch (ServerReachException e) {

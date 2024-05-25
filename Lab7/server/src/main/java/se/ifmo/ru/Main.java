@@ -76,9 +76,6 @@ public class Main {
         }
     }
 
-    //todo работа только со своими объектами
-    //todo help команду сделать
-    //todo все команды
 
     private static Map<String, AbstractCommand> fillCommandMap() {
         Map<String, AbstractCommand> commandHashMap = new HashMap<>();
