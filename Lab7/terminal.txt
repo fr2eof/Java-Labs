@@ -1,0 +1,6 @@
+C:\Program Files\PostgreSQL\16\bin>
+u'd be in this directory
+ssh -p 2222 s412952@helios.cs.ifmo.ru -L 5432:localhost:5432
+port throwing
+.\psql.exe -h localhost -d studs -U s412952
+start postgres
