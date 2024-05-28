@@ -12,7 +12,7 @@
     -fx-text-fill: white; /* Цвет текста */
 }
 
-#mainLabel {
+.mainLabel {
     -fx-font-family: "Arial";
     -fx-font-size: 35px;
     -fx-text-fill: white; /* Цвет текста */
@@ -51,7 +51,7 @@
     -fx-background-color: #007A4C; /* Цвет кнопки при наведении */
 }
 
-#registerLabel, #authLabel {
+.registerLabel, .authLabel {
     -fx-font-family: "Arial";
     -fx-font-size: 12px;
     -fx-text-fill: #80DEEA; /* Цвет ссылки */
@@ -60,12 +60,12 @@
     -fx-padding-top: 10px;
 }
 
-#registerLabel:hover, #authLabel:hover {
+.registerLabel:hover, #authLabel:hover {
     -fx-text-fill: white; /* Цвет текста при наведении */
     -fx-underline: true;
 }
 
-#errorLabel {
+.errorLabel {
     -fx-font-family: "Arial";
     -fx-font-size: 14px;
     -fx-text-fill: red;
