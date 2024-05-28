@@ -1,0 +1,87 @@
+/* styles.css */
+
+.root {
+    -fx-background-color: #014B7F; /* Основной синий цвет фона */
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+.label {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: white; /* Цвет текста */
+}
+
+#mainLabel {
+    -fx-font-family: "Arial";
+    -fx-font-size: 35px;
+    -fx-text-fill: white; /* Цвет текста */
+    -fx-padding-bottom: 20px;
+}
+
+.text-field, .password-field {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 200px;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+    -fx-border-color: #E0F7FA; /* Цвет полей ввода */
+    -fx-border-radius: 10;
+    -fx-padding: 10;
+    -fx-background-color: #E0F7FA; /* Цвет фона полей ввода */
+    -fx-text-fill: black; /* Цвет текста внутри полей ввода */
+    -fx-margin-bottom: 10px;
+}
+
+.button {
+    -fx-pref-height: 40px;
+    -fx-pref-width: 200px; /* Расширяем ширину кнопки для соответствия полям ввода */
+    -fx-background-color: #00A36C; /* Цвет кнопки */
+    -fx-text-fill: white;
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.2), 5, 0.0, 2, 2);
+    -fx-margin-top: 10px;
+}
+
+.button:hover {
+    -fx-background-color: #007A4C; /* Цвет кнопки при наведении */
+}
+
+#registerLabel, #authLabel {
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+    -fx-text-fill: #80DEEA; /* Цвет ссылки */
+    -fx-cursor: hand;
+    -fx-underline: false;
+    -fx-padding-top: 10px;
+}
+
+#registerLabel:hover, #authLabel:hover {
+    -fx-text-fill: white; /* Цвет текста при наведении */
+    -fx-underline: true;
+}
+
+#errorLabel {
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-text-fill: red;
+    -fx-padding-top: 10px;
+}
+
+.choice-box {
+    -fx-pref-height: 40px; /* Увеличиваем высоту для соответствия остальным элементам */
+    -fx-pref-width: 200px; /* Расширяем ширину для соответствия полям ввода */
+    -fx-font-family: "Arial";
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-border-color: #B2EBF2; /* Граница выпадающего списка */
+    -fx-border-radius: 5;
+    -fx-padding: 10;
+    -fx-background-color: white; /* Цвет фона выпадающего списка */
+    -fx-text-fill: black; /* Цвет текста */
+    -fx-margin-top: 10px;
+}
